@@ -161,16 +161,6 @@ class AssignAssistant(models.Model):
     def __str__(self):
         return self.doctor.full_name + " " + self.assistant.full_name
 
-# class DriverPayment(models.Model):
-#     driver = models.OneToOneField(Driver, on_delete=models.CASCADE, primary_key=True)
-#     bill = models.CharField(max_length=120, blank=True, null=True)
-#     paid = models.BooleanField(default=False)
-
-#     class Meta:
-#         db_table = 'payment'
-
-#     def __str__(self):
-#         return self.driver.full_name + " " + self.bill
     
 class HospitalRoute(models.Model):
     driver = models.OneToOneField(Driver, on_delete=models.CASCADE, primary_key=True)
