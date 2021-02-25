@@ -1,0 +1,319 @@
+<!DOCTYPE html> {%load static%}
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>{{title}}</title>
+
+    <meta name="description" content="ProUI is a Responsive Bootstrap Admin Template created by pixelcave and published on Themeforest.">
+    <meta name="author" content="pixelcave">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+    <link rel="shortcut icon" href="{%static 'front/img/favicon.png'%}">
+    <link rel="apple-touch-icon" href="{% static 'front/' %}img/icon57.png" sizes="57x57">
+    <link rel="apple-touch-icon" href="{% static 'front/' %}img/icon72.png" sizes="72x72">
+    <link rel="apple-touch-icon" href="{% static 'front/' %}img/icon76.png" sizes="76x76">
+    <link rel="apple-touch-icon" href="{% static 'front/' %}img/icon114.png" sizes="114x114">
+    <link rel="apple-touch-icon" href="{% static 'front/' %}img/icon120.png" sizes="120x120">
+    <link rel="apple-touch-icon" href="{% static 'front/' %}img/icon144.png" sizes="144x144">
+    <link rel="apple-touch-icon" href="{% static 'front/' %}img/icon152.png" sizes="152x152">
+    <link rel="apple-touch-icon" href="{% static 'front/' %}img/icon180.png" sizes="180x180">
+    <link rel="stylesheet" href="{% static 'front/' %}css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'front/' %}css/plugins.css">
+    <link rel="stylesheet" href="{% static 'front/' %}css/main.css">
+    <link rel="stylesheet" href="{% static 'front/' %}css/themes.css">
+    <script src="{% static 'front/' %}js/vendor/modernizr.min.js"></script>
+</head>
+
+<body>
+    <div id="page-wrapper">
+        <div class="preloader themed-background">
+            <h1 class="push-top-bottom text-light text-center"><strong>Digital Sheba</strong>Dashboard</h1>
+            <div class="inner">
+                <h3 class="text-light visible-lt-ie10"><strong>Loading..</strong></h3>
+                <div class="preloader-spinner hidden-lt-ie10"></div>
+            </div>
+        </div>
+        <div id="page-container" class="sidebar-partial sidebar-visible-lg sidebar-no-animations">
+            <div id="sidebar">
+                <div id="sidebar-scroll">
+                    <div class="sidebar-content">
+                        <a href="/" class="sidebar-brand">
+                            {%if user.is_superuser%}
+                                <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Admin </strong>Dashboard</span>
+                            {%elif user.is_doctor%}
+                                <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Dr. </strong>Dashboard</span>
+                            {%elif user.is_assistant%}
+                                <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Assist. </strong>Dashboard</span>
+                            {%elif user.is_nurse%}
+                                <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Nurse. </strong>Dashboard</span>
+                            {%endif%}
+                        </a>
+                        <div class="sidebar-section sidebar-user clearfix sidebar-nav-mini-hide">
+                            <div class="sidebar-user-avatar">
+                                <a href="/profile">
+                                    <img src="{% static 'front/' %}img/placeholders/avatars/avatar2.jpg" alt="avatar">
+                                </a>
+                            </div>
+                            <div class="sidebar-user-name">{{user.first_name | title}}</div>
+                            <div class="sidebar-user-links">
+                                <a href="/profile" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>
+                                <a href="/" data-toggle="tooltip" data-placement="bottom" title="Report"><i class="gi gi-envelope"></i></a>
+                                <a href="/" class="enable-tooltip" data-placement="bottom" title="Edit Profile"><i class="gi gi-cogwheel"></i></a>
+                                <a href="/logout" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="gi gi-exit"></i></a>
+                            </div>
+                        </div>
+                        <ul class="sidebar-nav">
+                            <li>
+                                <a href="/" class=" active"><i class="gi gi-stopwatch sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Dashboard</span></a>
+                            </li>
+                            <li>
+                                {%if user.is_superuser%}
+                                <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="fa fa-home sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">User Control</span></a>
+                                <ul>
+                                    <li>
+                                        <a href="/patient">Edit / Delete patient</a>
+                                    </li>
+                                    <li>
+                                        <a href="/crudDoctor">CRUD Doctor</a>
+                                    </li>
+                                    <li>
+                                        <a href="/crudNurse">CRUD Nurse</a>
+                                    </li>
+                                    <li>
+                                        <a href="/crudAssistant">CRUD Assistant</a>
+                                    </li>
+                                    <li>
+                                        <a href="/control_info">Control Info</a>
+                                    </li>
+                                    <li>
+                                        <a href="/reports_and_feedbacks">Check Feedback/Reports</a>
+                                    </li>
+
+                                </ul>
+                                {%elif user.is_doctor%}
+                                <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="fa fa-home sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Doc Control</span></a>
+                                <ul>
+                                    <li>
+                                        <a href="/give_prescription">Give Prescription</a>
+                                    </li>
+                                    <li>
+                                        <a href="/patient_health">Patient health Check</a>
+                                    </li>
+                                    <li>
+                                        <a href="/assign_nurse">Assign Nurse</a>
+                                    </li>
+                                    <li>
+                                        <a href="/give_report">Give Report</a>
+                                    </li>
+                                    <li>
+                                        <a href="/reports_and_feedbacks">Feedbacks</a>
+                                    </li>
+                                </ul>
+                                {%elif user.is_assistant%}
+                                <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="fa fa-home sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Assist Control</span></a>
+                                <ul>
+                                    <li>
+                                        <a href="/company">Medicine Companies</a>
+                                    </li>
+                                    <li>
+                                        <a href="/medicine">Medicine</a>
+                                    </li>
+                                    <li>
+                                        <a href="/setbill">Set Bill</a>
+                                    </li>
+                                    <li>
+                                        <a href="/get_bill">Get Bill</a>
+                                    </li>
+                                </ul>
+                                {%elif user.is_nurse%}
+                                <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="fa fa-home sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Nurse Control</span></a>
+                                <ul>
+                                    <li>
+                                        <a href="/patient_medicine_info">Get Patient Info</a>
+                                    </li>
+                                    <li>
+                                        <a href="/give_patient_report">Patient Report</a>
+                                    </li>
+                                </ul>
+                                {%endif%}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="main-container">
+                <header class="navbar navbar-default">
+                    <ul class="nav navbar-nav-custom">
+                        <li>
+                            <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar');this.blur();">
+                                <i class="fa fa-bars fa-fw"></i>
+                            </a>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="gi gi-settings"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-custom dropdown-options">
+                                <li class="dropdown-header text-center">Header Style</li>
+                                <li>
+                                    <div class="btn-group btn-group-justified btn-group-sm">
+                                        <a href="javascript:void(0)" class="btn btn-primary" id="options-header-default">Light</a>
+                                        <a href="javascript:void(0)" class="btn btn-primary" id="options-header-inverse">Dark</a>
+                                    </div>
+                                </li>
+                                <li class="dropdown-header text-center">Page Style</li>
+                                <li>
+                                    <div class="btn-group btn-group-justified btn-group-sm">
+                                        <a href="javascript:void(0)" class="btn btn-primary" id="options-main-style">Default</a>
+                                        <a href="javascript:void(0)" class="btn btn-primary" id="options-main-style-alt">Alternative</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav-custom pull-right">
+
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="{% static 'front/' %}img/placeholders/avatars/avatar2.jpg" alt="avatar"> <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                                <li class="dropdown-header text-center">Account</li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="/profile">
+                                        <i class="fa fa-user fa-fw pull-right"></i> Profile
+                                    </a>
+                                    <!-- Opens the user settings modal that can be found at the bottom of each page (page_footer.html in PHP version) -->
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="/logout"><i class="gi gi-exit fa-fw pull-right"></i> Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END User Dropdown -->
+                    </ul>
+                    <!-- END Right Header Navigation -->
+                </header>
+                <!-- END Header -->
+
+                <!-- Page content -->
+                {%block main_content%}
+                <!--  -->
+                {%endblock main_content%}
+                <!-- END Page Content -->
+
+                <!-- Footer -->
+                <footer class="clearfix">
+                    <div class="pull-right">
+                        Crafted with <i class="fa fa-heart text-danger"></i> by <a href="http://facebook.com/shahed.talukder32" target="_blank">Shahed Talukder</a>
+                    </div>
+                    <div class="pull-left">
+                        <span><script>document.write(new Date().getFullYear())</script></span> &copy; <a href="#" target="_blank">Admin Dashboard</a>
+                    </div>
+                </footer>
+                <!-- END Footer -->
+            </div>
+            <!-- END Main Container -->
+        </div>
+        <!-- END Page Container -->
+    </div>
+    <!-- END Page Wrapper -->
+
+    <!-- Scroll to top link, initialized in js/app.js - scrollToTop() -->
+    <a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
+
+    <!-- User Settings, modal which opens from Settings link (found in top right user menu) and the Cog link (found in sidebar user info) -->
+    <div id="modal-user-settings" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header text-center">
+                    <h2 class="modal-title"><i class="fa fa-pencil"></i> Settings</h2>
+                </div>
+                <!-- END Modal Header -->
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form action="index.html" method="post" enctype="multipart/form-data" class="form-horizontal form-bordered" onsubmit="return false;">
+                        <fieldset>
+                            <legend>Vital Info</legend>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Username</label>
+                                <div class="col-md-8">
+                                    <p class="form-control-static">Admin</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="user-settings-email">Email</label>
+                                <div class="col-md-8">
+                                    <input type="email" id="user-settings-email" name="user-settings-email" class="form-control" value="admin@example.com">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="user-settings-notifications">Email Notifications</label>
+                                <div class="col-md-8">
+                                    <label class="switch switch-primary">
+                                            <input type="checkbox" id="user-settings-notifications" name="user-settings-notifications" value="1" checked>
+                                            <span></span>
+                                        </label>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Password Update</legend>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="user-settings-password">New Password</label>
+                                <div class="col-md-8">
+                                    <input type="password" id="user-settings-password" name="user-settings-password" class="form-control" placeholder="Please choose a complex one..">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="user-settings-repassword">Confirm New Password</label>
+                                <div class="col-md-8">
+                                    <input type="password" id="user-settings-repassword" name="user-settings-repassword" class="form-control" placeholder="..and confirm it!">
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="form-group form-actions">
+                            <div class="col-xs-12 text-right">
+                                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-sm btn-primary">Save Changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- END Modal Body -->
+            </div>
+        </div>
+    </div>
+    <!-- END User Settings -->
+
+    <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
+    <script src="{% static 'front/' %}js/vendor/jquery.min.js"></script>
+    <script src="{% static 'front/' %}js/vendor/bootstrap.min.js"></script>
+    <script src="{% static 'front/' %}js/plugins.js"></script>
+    <script src="{% static 'front/' %}js/app.js"></script>
+
+    <!-- Google Maps API Key (you will have to obtain a Google Maps API key to use Google Maps) -->
+    <!-- For more info please have a look at https://developers.google.com/maps/documentation/javascript/get-api-key#key -->
+    <script src="https://maps.googleapis.com/maps/api/js?key="></script>
+    <script src="{% static 'front/' %}js/helpers/gmaps.min.js"></script>
+
+    <!-- Load and execute javascript code used only in this page -->
+    <script src="{% static 'front/' %}js/pages/index.js"></script>
+    {%block main_script%}
+    <!-- scripts -->
+    {%endblock main_script%}
+    <script>
+        $(function() {
+            Index.init();
+        });
+    </script>
+</body>
+
+</html>

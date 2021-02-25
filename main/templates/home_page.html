@@ -1,0 +1,220 @@
+{%extends 'front/base.html'%}
+<!--  -->
+{%load static%}
+<!--  -->
+{%block main_content%}
+<div id="page-content">
+    <!-- Dashboard Header -->
+    <!-- For an image header add the class 'content-header-media' and an image as in the following example -->
+    <div class="content-header content-header-media">
+        <div class="header-section">
+            <div class="row">
+                <!-- Main Title (hidden on small devices for the statistics to fit) -->
+                <div class="col-md-4 col-lg-6 hidden-xs hidden-sm">
+                    {%if user.is_superuser %}
+                    <h1>Welcome Admin Mr. <strong>{{user.first_name | title}} {{user.last_name | title}}</strong><br><small>You Look Awesome!</small></h1>
+                    {%elif user.is_doctor%}
+                    <h1>Welcome Dr. Mr. <strong>{{user.first_name | title}} {{user.last_name | title}}</strong><br><small>You Look Awesome!</small></h1>
+                    {%elif user.is_assistant%}
+                    <h1>Welcome Mr. <strong>{{user.first_name | title}} {{user.last_name | title}}</strong><br><small>You Look Awesome!</small></h1>
+                    {%elif user.is_moderator%}
+                    <h1>Welcome Mrs. <strong>{{user.first_name | title}} {{user.last_name | title}}</strong><br><small>You Look Awesome!</small></h1>
+                    {%endif%}
+                </div>
+                <!-- END Main Title -->
+
+                <!-- Top Stats -->
+                <div class="col-md-8 col-lg-6">
+                    <div class="row text-center">
+                        {%if user.is_superuser or user.is_assistant or user.is_nurse%}
+                        <div class="col-xs-4 col-sm-3">
+                            <h2 class="animation-hatch">
+                                <strong><i class="fa fa-child"></i> {{total_user}}</strong><br>
+                                <small><i class="fa fa-user"></i> Total User</small>
+                            </h2>
+                        </div>
+                        {%endif%} {%if user.is_doctor or user.is_nurse%}
+                        <div class="col-xs-4 col-sm-3">
+                            <h2 class="animation-hatch">
+                                <strong> <i class="fa fa-wheelchair"></i> {{total_patient}}</strong><br>
+                                <small><i class="fa fa-heart-o"></i> Patients</small>
+                            </h2>
+                        </div>
+                        {%endif%} {%if user.is_superuser or user.is_assistant or user.is_doctor or user.is_nurse%}
+                        <div class="col-xs-4 col-sm-3">
+                            <h2 class="animation-hatch">
+                                <strong>{{total_medicine}} pcs</strong><br>
+                                <small><i class="fa fa-plus-square"></i> Medicine</small>
+                            </h2>
+                        </div>
+                        {%endif%}
+                        <!-- We hide the last stat to fit the other 3 on small devices -->
+                        <div class="col-sm-3 hidden-xs">
+                            <h2 class="animation-hatch">
+                                <strong>{{weather.temperature}}&deg; C</strong><br>
+                                <small><i class="fa fa-map-marker"></i> Tangail</small>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Top Stats -->
+            </div>
+        </div>
+        <!-- For best results use an image with a resolution of 2560x248 pixels (You can also use a blurred image with ratio 10:1 - eg: 1000x100 pixels - it will adjust and look great!) -->
+        <img src="{% static 'front/' %}img/placeholders/headers/dashboard_header.jpg" alt="header image" class="animation-pulseSlow">
+    </div>
+    <!-- END Dashboard Header -->
+
+    <!-- Mini Top Stats Row -->
+    <div class="row">
+        <div class="col-sm-6 col-lg-3">
+            <!-- Widget -->
+            {%if user.is_doctor%}
+            <a href="#" class="widget widget-hover-effect1">
+                <div class="widget-simple">
+                    <div class="widget-icon pull-left themed-background-autumn animation-fadeIn">
+                        <i class="fa fa-hand-peace-o"></i>
+                    </div>
+
+                    <h3 class="widget-content text-right animation-pullDown">
+                        {{total_released}} <strong>Patient</strong><br>
+                        <small>Total Released</small>
+                    </h3>
+
+
+                </div>
+            </a>
+            {%elif user.is_superuser%}
+            <a href="/crudAssistant" class="widget widget-hover-effect1">
+                <div class="widget-simple">
+                    <div class="widget-icon pull-left themed-background-autumn animation-fadeIn">
+                        <i class="fa fa-hand-peace-o"></i>
+                    </div>
+
+                    <h3 class="widget-content text-right animation-pullDown">
+                        {{total_assistant}} <strong>Assitant</strong><br>
+                        <small>Total Assistant</small>
+                    </h3>
+                </div>
+            </a>
+            {%else%}
+            <a href="#" class="widget widget-hover-effect1">
+                <div class="widget-simple">
+                    <div class="widget-icon pull-left themed-background-autumn animation-fadeIn">
+                        <i class="fa fa-hand-peace-o"></i>
+                    </div>
+
+                    <h3 class="widget-content text-right animation-pullDown">
+                        {{total_patient}} <strong>Patient</strong><br>
+                        <small>Total Inside</small>
+                    </h3>
+                </div>
+            </a>
+
+            {%endif%}
+            <!-- END Widget -->
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <!-- Widget -->
+            <a href="/setbill" class="widget widget-hover-effect1">
+                <div class="widget-simple">
+                    <div class="widget-icon pull-left themed-background-spring animation-fadeIn">
+                        <i class="fa fa-money"></i>
+                    </div>
+                    <h3 class="widget-content text-right animation-pullDown">
+                        + <strong>{{total_bill}} Taka</strong><br>
+                        <small>Total Earning</small>
+                    </h3>
+                </div>
+            </a>
+            <!-- END Widget -->
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <!-- Widget -->
+            <a href="/reports_and_feedbacks" class="widget widget-hover-effect1">
+                <div class="widget-simple">
+                    <div class="widget-icon pull-left themed-background-fire animation-fadeIn">
+                        <i class="gi gi-envelope"></i>
+                    </div>
+                    <h3 class="widget-content text-right animation-pullDown">
+                        {{total_problem}} <strong>Feedbacks</strong>
+                        <small>Support Center</small>
+                    </h3>
+                </div>
+            </a>
+            <!-- END Widget -->
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <!-- Widget -->
+            {%if user.is_superuser%}
+            <a href="/crudDoctor" class="widget widget-hover-effect1">
+                <div class="widget-simple">
+                    <div class="widget-icon pull-left themed-background-amethyst animation-fadeIn">
+                        <i class="fa fa-user-plus"></i>
+                    </div>
+                    <h3 class="widget-content text-right animation-pullDown">
+                        +{{total_doctors}} <strong>Doctors</strong>
+                        <small>On Service</small>
+                    </h3>
+                </div>
+            </a>
+            {%elif user.is_doctor%}
+            <a href="#" class="widget widget-hover-effect1">
+                <div class="widget-simple">
+                    <div class="widget-icon pull-left themed-background-amethyst animation-fadeIn">
+                        <i class="fa fa-user-plus"></i>
+                    </div>
+                    <h3 class="widget-content text-right animation-pullDown">
+                        +{{total_assistant}} <strong>Assitant</strong>
+                        <small>On Service</small>
+                    </h3>
+                </div>
+            </a>
+            {%else%}
+            <a href="#" class="widget widget-hover-effect1">
+                <div class="widget-simple">
+                    <div class="widget-icon pull-left themed-background-amethyst animation-fadeIn">
+                        <i class="fa fa-user-plus"></i>
+                    </div>
+                    <h3 class="widget-content text-right animation-pullDown">
+                        +{{total_doctors}} <strong>Doctor</strong>
+                        <small>On Service</small>
+                    </h3>
+                </div>
+            </a>
+            {%endif%}
+            <!-- END Widget -->
+        </div>
+    </div>
+    <!-- END Mini Top Stats Row -->
+
+    <!-- Widgets Row -->
+    <div class="row text-center">
+        <div class="col-sm-6 col-lg-3">
+            <a href="/reports_and_feedbacks" class="widget widget-hover-effect1effect2">
+                <div class="widget-extra themed-background">
+                    <h4 class="widget-content-light"><strong>Pending</strong> Reports</h4>
+                </div>
+                <div class="widget-extra-full"><span class="h2 animation-expandOpen">{{solve}}</span></div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <a href="javascript:void(0)" class="widget widget-hover-effect2">
+                <div class="widget-extra themed-background-dark">
+                    <h4 class="widget-content-light"><strong>Total</strong> Nurse Assigned</h4>
+                </div>
+                <div class="widget-extra-full"><span class="h2 themed-color-dark animation-expandOpen">{{assign_nurse}}</span></div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-6">
+            <a href="javascript:void(0)" class="widget widget-hover-effect2">
+                <div class="widget-extra themed-background-dark">
+                    <h4 class="widget-content-light"><strong>Total</strong> Doctors Assigned</h4>
+                </div>
+                <div class="widget-extra-full"><span class="h2 themed-color-dark animation-expandOpen">{{assign_doc}}</span></div>
+            </a>
+        </div>
+    </div>
+    <!-- END Widgets Row -->
+</div>
+{%endblock main_content%}
