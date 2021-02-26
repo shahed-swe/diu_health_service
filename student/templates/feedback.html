@@ -1,0 +1,46 @@
+{%extends 'patient_base.html'%}
+<!--  -->
+{%load static%}
+<!-- static loaded -->
+{%block main_content%}
+<!--  -->
+<style>
+    label {
+        font-family: 'Spartan', sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    #star {
+        color: red;
+    }
+    
+    .form-control {
+        height: 50px;
+    }
+</style>
+<section class="w3l-contact-main">
+    <div class="contact-infhny py-5">
+        <div class="container py-lg-3">
+            <div class="title-content text-left mb-lg-4 mb-4 text-center">
+                <h6 class="sub-title">Registration</h6>
+                <h3 class="hny-title">Give Your <span>Cridentials</span></h3>
+            </div>
+            <div class="col-12 col-lg-10 col-md-8 col-sm-10 mx-auto">
+                <form method="POST">
+                    {%csrf_token%}
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <label for="">Feedback<span id="star">*</span></label>
+                            <input type="text" name="feedback" id="username" class="form-control">
+                        </div>
+                        <button class="btn btn-outline-success shadow-sm">Submit</button>
+                    </div>
+                </form>
+                <!--  -->
+                {{message}}
+                <!--  -->
+            </div>
+        </div>
+</section>
+{%endblock main_content%}

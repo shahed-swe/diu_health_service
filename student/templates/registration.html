@@ -1,0 +1,83 @@
+{%extends 'patient_base.html'%}
+<!--  -->
+{%load static%}
+<!-- static loaded -->
+{%block main_content%}
+<!--  -->
+<style>
+    label {
+        font-family: 'Spartan', sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    #star {
+        color: red;
+    }
+    
+    .form-control {
+        height: 50px;
+    }
+</style>
+<section class="w3l-contact-main">
+    <div class="contact-infhny py-5">
+        <div class="container py-lg-3">
+            <div class="title-content text-left mb-lg-4 mb-4 text-center">
+                <h6 class="sub-title">Registration</h6>
+                <h3 class="hny-title">Give Your <span>Cridentials</span></h3>
+            </div>
+            <div class="col-12 col-lg-10 col-md-8 col-sm-10 mx-auto">
+                <form method="POST">
+                    {%csrf_token%}
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <label for="">Username<span id="star">*</span></label>
+                            <input type="text" name="username" id="username" class="form-control">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="">First Name<span id="star">*</span></label>
+                            <input type="text" name="first_name" id="first_name" class="form-control">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="">Last Name<span id="star">*</span></label>
+                            <input type="text" name="last_name" id="last_name" class="form-control">
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="">Password<span id="star">*</span></label>
+                            <input type="password" name="password1" id="password1" class="form-control">
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="">Confirm Password<span id="star">*</span></label>
+                            <input type="password" name="password2" id="password2" class="form-control">
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="">Email Address<span id="star">*</span></label>
+                            <input type="email" name="email" id="email" class="form-control">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="">Student Id<span id="star">*</span></label>
+                            <input type="text" name="student_id" id="student_id" class="form-control">
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="">Address<span id="star">*</span></label>
+                            <textarea name="address" id="address" cols="5" rows="5" style="resize: none;" class="form-control"></textarea>
+                        </div>
+
+                        <div class="form-group col-6">
+                            <label for="">Age<span id="star">*</span></label>
+                            <input type="text" name="age" id="age" class="form-control">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="">Phone No<span id="star">*</span></label>
+                            <input type="text" name="phone" id="phoneno" class="form-control">
+                        </div>
+                        <button class="btn btn-outline-success shadow-sm btn-block">Submit</button>
+                    </div>
+                </form>
+                <!--  -->
+                {{message}}
+                <!--  -->
+            </div>
+        </div>
+</section>
+{%endblock main_content%}

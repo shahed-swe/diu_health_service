@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+import datetime
 # Create your models here.
 class User(AbstractUser):
     is_doctor = models.BooleanField(default=False)
@@ -172,3 +172,10 @@ class HospitalRoute(models.Model):
 
     def __str__(self):
         return self.driver.full_name
+
+class AssignMedicine(models.Model):
+    id = models.AutoField(primary_key=True)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=True, null=True, related_name='student_medicine')
+    medicine = models.ManyToManyField(Medicine, related_name='assigned_medicine')
+    medicine_time = models.TimeField(default=datetime.time(12,00))
+    notification = models.BooleanField(default=False)

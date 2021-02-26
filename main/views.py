@@ -4,6 +4,10 @@ from .models import *
 from django.http import HttpResponse
 # Create your views here.
 def home(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    elif request.user.is_student:
+        return redirect('/patient/home')
     print(get_ip(request))
     print(request.user.first_name + ' | '+request.user.last_name)
     return HttpResponse("Hello")
@@ -20,3 +24,26 @@ def get_ip(request):
     except:
         ip = ""
     return ip
+
+# this is for login panel
+def mylogin(request):
+    print(get_ip(request))
+    if request.user.is_authenticated:
+        return redirect('/')
+    if request.method == 'POST':
+        utxt = request.POST.get('username')
+        upass = request.POST.get('password')
+        if utxt != '' and upass != '':
+            user = authenticate(username=utxt, password=upass)
+            if user != None:
+                login(request, user)
+                return redirect('/')
+        else:
+            return redirect('/login')
+    context = {"title": "Login"}
+    return render(request, 'login.html', context)
+
+# this is for logout panel
+def mylogout(request):
+    logout(request)
+    return redirect('/login')

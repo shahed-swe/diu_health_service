@@ -1,0 +1,56 @@
+{%extends 'patient_base.html'%}
+<!--  -->
+{%load static%}
+<!--  -->
+{%block main_content%}
+<!--  -->
+<style>
+    #medicine_name {
+        background: #00ce7c;
+    }
+    
+    #company_name {
+        background: #00ce7c;
+    }
+</style>
+<section class="w3l-wecome-content-6">
+    <!-- /content-6-section -->
+    <div class="ab-content-6-mian py-5">
+        <div class="container py-lg-3">
+            <div class="title-head text-left mb-4">
+                <h6 class="sub-title text-center">Medicine</h6>
+                <h3 class="hny-title text-center">
+                    Assigned <span>Medicine List</span> </h3>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Medicine Name</th>
+                        <th scope="col">Medicine Company</th>
+                        <th scope="col">Taking Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for i in medicine%}
+                    <!--  -->
+                    {%for j in i.medicine.all%}
+                    <!--  -->
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{j.medicine_name}}</td>
+                        <td>
+                            {%for k in j.company_name.all%} <span id="company_name">{{k.company_name}}</span> {%endfor%}
+                        </td>
+                        <td>{{i.medicine_time}}</td>
+                    </tr>
+                    {%endfor%}
+                    <!--  -->
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<!--  -->
+{%endblock main_content%}
