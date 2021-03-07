@@ -179,3 +179,21 @@ class AssignMedicine(models.Model):
     medicine = models.ManyToManyField(Medicine, related_name='assigned_medicine')
     medicine_time = models.TimeField(default=datetime.time(12,00))
     notification = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = 'assigned_medicine'
+
+    def __str__(self):
+        return self.student.full_name + ' ' + str(self.id)
+
+
+class EmergencyMsg(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=True, null=True)
+    message = models.CharField(max_length=120, blank=True, null=True)
+
+    class Meta:
+        db_table = 'emergency_msg'
+
+    def __str__(self):
+        return self.student.full_name + ' ' + self.message[0:10]
+
