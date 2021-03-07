@@ -84,6 +84,18 @@ class Driver(models.Model):
     def __str__(self):
         return self.full_name
 
+class Driver(models.Model):
+    admin_id = models.CharField(max_length=120,blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="admin")
+    full_name = models.CharField(max_length=200, blank=True, null=True)
+    phone_no = models.CharField(max_length=200, blank=True, null=True)
+
+    class Meta:
+        db_table = "admin_info"
+    
+    def __str__(self):
+        return self.full_name
+
 class MedicineCompany(models.Model):
     company_name = models.CharField(max_length=120, blank=True, null=True)
 
