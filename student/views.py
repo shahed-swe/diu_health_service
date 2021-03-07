@@ -54,3 +54,4 @@ def registration(request):
             context = {"title":"Registration","message":message}
             return render(request, 'registration.html', context)
     return render(request, 'registration.html', {'title':"Registration"})
+
