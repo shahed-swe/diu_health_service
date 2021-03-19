@@ -84,7 +84,7 @@ class Driver(models.Model):
     def __str__(self):
         return self.full_name
 
-class Driver(models.Model):
+class Admin(models.Model):
     admin_id = models.CharField(max_length=120,blank=True, null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="admin")
     full_name = models.CharField(max_length=200, blank=True, null=True)
@@ -171,7 +171,7 @@ class AssignAssistant(models.Model):
         db_table = "assigned_assistant"
 
     def __str__(self):
-        return self.doctor.full_name + " " + self.assistant.full_name
+        return "Doctor "+self.doctor.full_name + "is assigned with " + self.assistant.full_name
 
     
 class HospitalRoute(models.Model):

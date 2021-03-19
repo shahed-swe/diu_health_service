@@ -7,9 +7,9 @@ def home(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     elif request.user.is_student:
-        return redirect('/patient/home')
+        return redirect('/')
     print(get_ip(request))
-    print(request.user.first_name + ' | '+request.user.last_name)
+    print(request.user.username)
     return HttpResponse("Hello")
 
 
