@@ -3,6 +3,20 @@ from main.models import *
 from django.http import HttpResponse
 
 # Create your views here.
+
+
+def get_ip(request):
+    try:
+        x_forward = request.META.get("HTTP_X_FORWARD_FOR")
+        if x_forward:
+            ip = x_forward.split(",")[0]
+        else:
+            ip = request.META.get("REMOTE_ADDR")
+    except:
+        ip = ""
+    return ip
+
+
 def student(request):
     if not request.user.is_authenticated:
         return redirect('/login')

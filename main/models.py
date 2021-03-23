@@ -202,6 +202,7 @@ class AssignMedicine(models.Model):
 class EmergencyMsg(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=True, null=True)
     message = models.CharField(max_length=120, blank=True, null=True)
+    solve = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'emergency_msg'
