@@ -1,0 +1,162 @@
+{%extends 'base.html'%}
+<!--  -->
+{%load static%}
+<!-- static file loaded -->
+{%block main_content%}
+<!-- main content block starts -->
+<div id="page-content">
+    <!-- Datatables Header -->
+    <div class="content-header">
+        <div class="header-section">
+            <h1>
+                <i class="fa fa-table"></i>Doctors<br><small>In nothing do men more nearly approach the gods than in giving health to men.</small><br/><small>– Marcus Tullius Cicero</small>
+            </h1>
+        </div>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Tables</li>
+        <li><a href="">Doctor</a></li>
+    </ul>
+    <!-- END Datatables Header -->
+
+    <!-- Datatables Content -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Basic Form Elements Block -->
+            <div class="block">
+                <!-- Basic Form Elements Title -->
+                <div class="block-title">
+                    <div class="block-options pull-right">
+                        <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-default toggle-bordered enable-tooltip" data-toggle="button" title="" data-original-title="Toggles .form-bordered class">No Borders</a>
+                    </div>
+                    <h2><strong>Doctor's Profile</strong> Create</h2>
+                </div>
+                <!-- END Form Elements Title -->
+
+                <!-- Basic Form Elements Content -->
+                <form method="POST" class="form-horizontal form-bordered">
+                    {%csrf_token%}
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Username</label>
+                        <div class="col-md-9">
+                            <input class="form-control" name="doctorUsername" id="username" placeholder="Enter Username" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">First Name</label>
+                        <div class="col-md-9">
+                            <input type="text" id="firstname" name="doctorFirstname" class="form-control" placeholder="Enter First Name">
+                            <span class="help-block"><span style="color:red">*</span>must enter your firstname</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Last Name</label>
+                        <div class="col-md-9">
+                            <input type="text" id="lastname" name="doctorLastname" class="form-control" placeholder="Enter Last Name">
+                            <span class="help-block"><span style="color:red">*</span>must enter your lastname</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-email-input">Email</label>
+                        <div class="col-md-9">
+                            <input type="email" id="email" name="doctorEmail" class="form-control" placeholder="Enter Email Address">
+                            <span class="help-block"><span style="color:red">*</span>please enter your email</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-password-input">Password</label>
+                        <div class="col-md-9">
+                            <input type="password" id="password1" name="doctorPassword1" class="form-control" placeholder="Password">
+                            <span class="help-block"><span style="color:red">*</span>please enter a complex password</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-email-input">Employee Id</label>
+                        <div class="col-md-9">
+                            <input type="text" id="age" name="doctorId" class="form-control" placeholder="Enter Employee Id">
+                            <span class="help-block"><span style="color:red">*</span>please enter id</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-textarea-input">Address</label>
+                        <div class="col-md-9">
+                            <textarea id="address" name="doctorAddress" rows="9" class="form-control" placeholder="Enter Address"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-email-input">Age</label>
+                        <div class="col-md-9">
+                            <input type="text" id="age" name="doctorAge" class="form-control" placeholder="Enter Age">
+                            <span class="help-block"><span style="color:red">*</span>please enter age</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-email-input">Phone No</label>
+                        <div class="col-md-9">
+                            <input type="text" id="email" name="doctorPhoneno" class="form-control" placeholder="Enter Phone Number">
+                            <span class="help-block"><span style="color:red">*</span>please enter phone no</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Submit</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Basic Form Elements Content -->
+            </div>
+            <!-- END Basic Form Elements Block -->
+        </div>
+    </div>
+    <div class="block full">
+        <div class="block-title">
+            <h2><strong>Doctors</strong> Profile</h2>
+        </div>
+        <div class="table-responsive">
+            <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th class="text-center"><i class="gi gi-user"></i></th>
+                        <th>Doctor</th>
+                        <th>Address</th>
+                        <th>Phone No</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for i in doc%}
+                    <tr>
+                        <td class="text-center">{{i.user.id}}</td>
+                        <td class="text-center"><img src="{%static 'front/'%}img/placeholders/avatars/avatar15.jpg" alt="avatar" class="img-circle"></td>
+                        <td><a href="javascript:void(0)">{{i.full_name | title}}</a></td>
+                        <td>{{i.address}}</td>
+                        <td><span class="text-center">{{i.phone_no}}</span></td>
+                        <td class="text-center">
+                            <div class="btn-group">
+
+                                <a href="{% url 'edit_doctor' id=i.pk %}" data-toggle="tooltip" title="Edit" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+                                <a href="{% url 'delete_doctor' id=i.pk %}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- END Datatables Content -->
+</div>
+{%endblock main_content%}
+<!--  -->
+{%block main_script%}
+<!-- scripts start -->
+<script src="{%static 'front/'%}js/pages/tablesDatatables.js"></script>
+<script>
+    $(function() {
+        TablesDatatables.init();
+    });
+</script>
+<!-- scripts ends -->
+{%endblock main_script%}

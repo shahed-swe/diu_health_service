@@ -167,3 +167,68 @@ def delete_patient(request, id):
         return render(request, 'delete_patient_view.html',{"title":"Delete","patient":patient})
     else:
         return redirect('/')
+
+# crud system for admin who will control all of doctor's credentials
+def addDoctorInformation(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        doctor = Doctor.objects.all()
+        context = {"title":"Doctor Information","doc":doctor}
+
+        if request.method == "POST":
+            user = User(
+                username = request.POST.get('doctorUsername'),
+                first_name = request.POST.get('doctorFirstname'),
+                last_name = request.POST.get('doctorLastname'),
+                email = request.POST.get('doctorEmail'),
+                is_doctor = True,
+                is_active = True
+            )
+            user.set_password(request.POST.get('doctorPassword1'))
+            user.save()
+            doctor = Doctor(
+                user = user,
+                employee_id = request.POST.get('doctorId'),
+                full_name = user.first_name + ' ' + user.last_name,
+                address = request.POST.get('doctorAddress'),
+                age = request.POST.get('doctorAge'),
+                phone_no = request.POST.get('doctorPhoneno')
+            )
+            doctor.save()
+        return render(request, 'crud_doctor.html', context)
+    else:
+        return redirect('/')
+
+
+def edit_doctor(request, id):
+    if request.user.is_authenticated and request.user.is_superuser:
+        doc = Doctor.objects.filter(pk=id)
+        user = User.objects.get(pk=id)
+        if request.method == "POST":
+            doctor = Doctor(
+                user = user,
+                employee_id = request.POST.get('doctorId'),
+                full_name = user.first_name + ' ' +user.last_name,
+                address = request.POST.get('doctorAddress'),
+                age = request.POST.get('doctorAge'),
+                phone_no = request.POST.get('doctorPhoneno'),
+            )
+            doctor.save()
+            return redirect('/crudDoctor')
+        return render(request, 'edit_doctor_view.html',{"title":"Edit Doctor","doc":doc})
+    else:
+        return redirect('/')
+
+def delete_doctor(request, id):
+    if request.user.is_authenticated and request.user.is_superuser:
+        doc = Doctor.objects.filter(pk=id)
+        user = User.objects.filter(pk=id)
+        if request.method == "POST":
+            val = request.POST.get('button-value')
+            if val == "Yes":
+                print("Doctor Credentials deleted")
+                doc.delete()
+                user.delete()
+                return redirect('/crudDoctor')
+        return render(request, 'delete_doctor_view.html', {"title":"Delete Credentials","doc":doc})
+    else:
+        return redirect('/')
