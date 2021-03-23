@@ -52,10 +52,10 @@ def home(request):
     return render(request, 'home_page.html', context)
 
 def total_released_student():
-    obj = ConditionInfo.objects.all()
+    obj = Student.objects.all()
     cnt = 0
     for i in obj:
-        if i.solve == True:
+        if i.released == True:
             cnt += 1
     
     return cnt
@@ -100,3 +100,70 @@ def mylogin(request):
 def mylogout(request):
     logout(request)
     return redirect('/login')
+
+
+# user profile
+def user_profile(request):
+    if request.user.is_authenticated:
+        return render(request, 'user_profile.html', {"title":"{} Profile".format(request.user.username.title())})
+    else:
+        return redirect('/')
+
+# only for student information controlling
+def patient(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    elif request.user.is_superuser:
+        patient = Student.objects.all()
+        return render(request, 'patient_control.html',{'title':"Student","patient":patient})
+    else:
+        return redirect('/')
+
+def edit_patient(request, id):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    elif request.user.is_superuser:
+        pat = Student.objects.filter(pk=id)
+        user = User.objects.get(pk=id)
+        if request.method == "POST":
+            if request.POST.get('patientRelease') == 'on':
+                patient = Student(
+                    user = user,
+                    full_name = user.first_name+ ' '+ user.last_name,
+                    address = request.POST.get('patientAddress'),
+                    age = request.POST.get('patientAge'),
+                    phone_no = request.POST.get('patientPhoneno'),
+                    released = True 
+                )
+                patient.save()
+            else:
+                patient = Student(
+                    user=user,
+                    full_name=user.first_name + ' ' + user.last_name,
+                    address=request.POST.get('patientAddress'),
+                    age=request.POST.get('patientAge'),
+                    phone_no=request.POST.get('patientPhoneno'),
+                    released=False
+                )
+                patient.save()
+            return redirect('/patient')
+        return render(request, 'edit_patient_view.html',{'title':"Edit {}".format(user.username),"pat":pat})
+    else:
+        return redirect('/')
+
+def delete_patient(request, id):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    elif request.user.is_superuser:
+        patient = Student.objects.filter(pk=id)
+        user = User.objects.filter(pk=id)
+        if request.method == "POST":
+            val = request.POST.get('button-value')
+            if val == "Yes":
+                print("Patient Deleted")
+                patient.delete()
+                user.delete()
+                return redirect('/patient')
+        return render(request, 'delete_patient_view.html',{"title":"Delete","patient":patient})
+    else:
+        return redirect('/')

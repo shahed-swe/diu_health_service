@@ -39,7 +39,7 @@
             <div id="sidebar">
                 <div id="sidebar-scroll">
                     <div class="sidebar-content">
-                        <a href="/" class="sidebar-brand">
+                        <a href="{%url 'home'%}" class="sidebar-brand">
                             {%if user.is_superuser%}
                                 <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Admin </strong>Dashboard</span>
                             {%elif user.is_doctor%}
@@ -52,28 +52,28 @@
                         </a>
                         <div class="sidebar-section sidebar-user clearfix sidebar-nav-mini-hide">
                             <div class="sidebar-user-avatar">
-                                <a href="/profile">
+                                <a href="{%url 'user_profile'%}">
                                     <img src="{% static 'front/' %}img/placeholders/avatars/avatar2.jpg" alt="avatar">
                                 </a>
                             </div>
                             <div class="sidebar-user-name">{{user.first_name | title}}</div>
                             <div class="sidebar-user-links">
-                                <a href="/profile" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>
-                                <a href="/" data-toggle="tooltip" data-placement="bottom" title="Report"><i class="gi gi-envelope"></i></a>
-                                <a href="/" class="enable-tooltip" data-placement="bottom" title="Edit Profile"><i class="gi gi-cogwheel"></i></a>
-                                <a href="/logout" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="gi gi-exit"></i></a>
+                                <a href="{%url 'user_profile'%}" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>
+                                <a href="{%url 'home'%}" data-toggle="tooltip" data-placement="bottom" title="Report"><i class="gi gi-envelope"></i></a>
+                                <a href="{%url 'home'%}" class="enable-tooltip" data-placement="bottom" title="Edit Profile"><i class="gi gi-cogwheel"></i></a>
+                                <a href="{%url 'mylogout'%}" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="gi gi-exit"></i></a>
                             </div>
                         </div>
                         <ul class="sidebar-nav">
                             <li>
-                                <a href="/" class=" active"><i class="gi gi-stopwatch sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Dashboard</span></a>
+                                <a href="{%url 'home'%}" class=" active"><i class="gi gi-stopwatch sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Dashboard</span></a>
                             </li>
                             <li>
                                 {%if user.is_superuser%}
                                 <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="fa fa-home sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">User Control</span></a>
                                 <ul>
                                     <li>
-                                        <a href="/patient">Student Information</a>
+                                        <a href="{%url 'patient'%}">Student Information</a>
                                     </li>
                                     <li>
                                         <a href="/crudDoctor">Doctor Information</a>

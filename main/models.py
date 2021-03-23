@@ -35,6 +35,7 @@ class Student(models.Model):
     address = models.CharField(max_length=200, blank=True, null=True)
     age = models.CharField(max_length=200, blank=True, null=True)
     phone_no = models.CharField(max_length=200, blank=True, null=True)
+    released = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'student_info'
