@@ -232,3 +232,136 @@ def delete_doctor(request, id):
         return render(request, 'delete_doctor_view.html', {"title":"Delete Credentials","doc":doc})
     else:
         return redirect('/')
+
+def crudAssistant(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        assis = Assistant.objects.all()
+        context = {'title':"Manage Assistant", 'assistant':assis}
+        if request.method == "POST":
+            user = User(
+                username = request.POST.get('assistantUsername'),
+                first_name = request.POST.get('assistantFirstname'),
+                last_name = request.POST.get('assistantLastname'),
+                email = request.POST.get('assistantEmail'),
+                is_assistant = True,
+                is_active = True
+            )
+            user.set_password(request.POST.get('assistantPassword1'))
+            user.save()
+            # print(user.password)
+            # print(user)
+            assistant = Assistant(
+                user = user,
+                assistant_id = request.POST.get('assistantId'),
+                full_name = user.first_name+ ' '+user.last_name,
+                address = request.POST.get('assistantAddress'),
+                age = request.POST.get('assistantAge'),
+                phone_no = request.POST.get('assistantPhoneno')
+            )
+            # print(assistant)
+            assistant.save()
+        return render(request, 'crud_assistant.html',context)
+    else:
+        return redirect('/')
+
+# edit view of assistant, only accessible for admin
+def edit_assistant(request, id):
+    if request.user.is_authenticated and request.user.is_superuser:
+        assis = Assistant.objects.filter(pk=id)
+        user = User.objects.get(pk=id)
+        if request.method == "POST":
+            assistant = Assistant(
+                user = user,
+                assistant_id = request.POST.get('assistantId'),
+                full_name = user.first_name+ ' '+user.last_name,
+                address = request.POST.get('assistantAddress'),
+                age = request.POST.get('assistantAge'),
+                phone_no = request.POST.get('assistantPhoneno')
+            )
+            assistant.save()
+            # print(assistant.assistant_id)
+            return redirect('/crudAssistant')
+        return render(request,'edit_assistant_view.html',{"title":"Update Assistant","assis":assis})
+    else:
+        return redirect('/')
+
+# delete view of assistant, only accessible for admin
+def delete_assistant(request, id):
+    if request.user.is_authenticated and request.user.is_superuser:
+        assis = Assistant.objects.filter(pk=id)
+        user = User.objects.get(pk=id)
+        if request.method == "POST":
+            val = request.POST.get('button-value')
+            if val == "Yes":
+                # print("Assistant Deleted")
+                user.delete()
+                assis.delete()
+                return redirect('/crudAssistant')
+        return render(request, 'delete_assistant_view.html', {"title":"Assistant Update","assis":assis})
+    else:
+        return redirect('/')
+
+# moderator crud system
+def crudModerator(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        mod = Moderator.objects.all()
+        context = {'title':"Manage Moderator", 'moderator':mod}
+        if request.method == "POST":
+            user = User(
+                username = request.POST.get('moderatorUsername'),
+                first_name = request.POST.get('moderatorFirstname'),
+                last_name = request.POST.get('moderatorLastname'),
+                email = request.POST.get('moderatorEmail'),
+                is_assistant = True,
+                is_active = True
+            )
+            user.set_password(request.POST.get('moderatorPassword1'))
+            user.save()
+            moderator = Moderator(
+                user = user,
+                moderator_id = request.POST.get('moderatorId'),
+                full_name = user.first_name+ ' '+user.last_name,
+                address = request.POST.get('moderatorAddress'),
+                age = request.POST.get('moderatorAge'),
+                phone_no = request.POST.get('moderatorPhoneno')
+            )
+            moderator.save()
+        return render(request, 'crud_moderator.html',context)
+    else:
+        return redirect('/')
+
+# edit view of assistant, only accessible for admin
+def edit_moderator(request, id):
+    if request.user.is_authenticated and request.user.is_superuser:
+        mod = Moderator.objects.filter(pk=id)
+        user = User.objects.get(pk=id)
+        if request.method == "POST":
+            moderator = Moderator(
+                user = user,
+                moderator_id = request.POST.get('moderatorId'),
+                full_name = user.first_name+ ' '+user.last_name,
+                address = request.POST.get('moderatorAddress'),
+                age = request.POST.get('moderatorAge'),
+                phone_no = request.POST.get('moderatorPhoneno')
+            )
+            moderator.save()
+            return redirect('/crudmoderator')
+        return render(request,'edit_moderator_view.html',{"title":"Update Moderator","mod":mod})
+    else:
+        return redirect('/')
+
+# delete view of assistant, only accessible for admin
+def delete_moderator(request, id):
+    if request.user.is_authenticated and request.user.is_superuser:
+        mod = Moderator.objects.filter(pk=id)
+        user = User.objects.get(pk=id)
+        if request.method == "POST":
+            val = request.POST.get('button-value')
+            if val == "Yes":
+                # print("Assistant Deleted")
+                user.delete()
+                mod.delete()
+                return redirect('/crudmoderator')
+        return render(request, 'delete_assistant_view.html', {"title":"Assistant Update","assis":mod})
+    else:
+        return redirect('/')

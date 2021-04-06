@@ -13,4 +13,10 @@ urlpatterns = [
     path('crudDoctor/', views.addDoctorInformation, name="addDoctorInformation"),
     url(r'^edit_doctor/(?P<id>.*)/$', views.edit_doctor, name="edit_doctor"),
     url(r'^delete_doctor/(?P<id>.*)/$', views.delete_doctor, name="delete_doctor"),
+    path('crudAssistant/', views.crudAssistant, name="crudAssistant"),
+    url(r'^edit_assistant/(?P<id>.*)/$', views.edit_assistant, name="edit_assistant"),
+    url(r'^delete_assistant/(?P<id>.*)/$', views.delete_assistant, name="delete_assistant"),
+    path('crudmoderator/', views.crudModerator, name="crudModerator"),
+    url(r'^edit_moderator/(?P<id>.*)/$', views.edit_moderator, name="edit_moderator"),
+    url(r'^delete_moderator/(?P<id>.*)/$', views.delete_moderator, name="delete_moderator"),
 ]
