@@ -1,0 +1,195 @@
+{%extends 'base.html'%}
+<!--  -->
+{%load static%}
+<!-- static file loaded -->
+{%block main_content%}
+<!-- main content block starts -->
+<div id="page-content">
+    <!-- Datatables Header -->
+    <div class="content-header">
+        <div class="header-section">
+            <h1>
+                <i class="fa fa-table"></i>Control Panel<br><small>In nothing do men more nearly approach the gods than in giving health to men.</small><br/><small>– Marcus Tullius Cicero</small>
+            </h1>
+        </div>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Tables</li>
+        <li><a href="">Control</a></li>
+    </ul>
+    <!-- END Datatables Header -->
+
+    <!-- Datatables Content -->
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Basic Form Elements Block -->
+            <div class="block">
+                <!-- Basic Form Elements Title -->
+                <div class="block-title">
+                    <div class="block-options pull-right">
+                        <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-default toggle-bordered enable-tooltip" data-toggle="button" title="" data-original-title="Toggles .form-bordered class">Add / Update</a>
+                    </div>
+                    <h2><strong>Assign</strong> Doctor</h2>
+                </div>
+                <!-- END Form Elements Title -->
+
+                <!-- Basic Form Elements Content -->
+                <form method="POST" class="form-horizontal form-bordered">
+                    {%csrf_token%}
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Student</label>
+                        <div class="col-md-9">
+                            <select name="patient1" id="doctor" class="form-control">
+                                <option value="">Choose...</option>
+                                {%for i in pat%}
+                                <option value="{{i.user.id}}">{{i.full_name}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Doctor</label>
+                        <div class="col-md-9">
+                            <select name="doctor1" id="patient" class="form-control">
+                                <option value="">Choose...</option>
+                                {%for i in doc%}
+                                <option value="{{i.user.id}}">{{i.full_name}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    <input type="text" name="assigndoctor" value="1" hidden>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Submit</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Basic Form Elements Content -->
+            </div>
+            <!-- END Basic Form Elements Block -->
+        </div>
+        <div class="col-md-6">
+            <!-- Basic Form Elements Block -->
+            <div class="block">
+                <!-- Basic Form Elements Title -->
+                <div class="block-title">
+                    <div class="block-options pull-right">
+                        <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-default toggle-bordered enable-tooltip" data-toggle="button" title="" data-original-title="Toggles .form-bordered class">Add / Update</a>
+                    </div>
+                    <h2><strong>Assign</strong> Assistant</h2>
+                </div>
+                <!-- END Form Elements Title -->
+
+                <!-- Basic Form Elements Content -->
+                <form method="POST" class="form-horizontal form-bordered">
+                    {%csrf_token%}
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Doctor</label>
+                        <div class="col-md-9">
+                            <select name="doctor2" id="doctor" class="form-control">
+                                <option value="">Choose...</option>
+                                {%for i in doc%}
+                                <option value="{{i.user.id}}">{{i.full_name}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Assistant</label>
+                        <div class="col-md-9">
+                            <select name="assistant1" id="assistant" class="form-control">
+                                <option value="">Choose...</option>
+                                {%for i in assis%}
+                                <option value="{{i.user.id}}">{{i.full_name}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    <input type="text" name="assignassistant" value="2" hidden>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Submit</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Basic Form Elements Content -->
+            </div>
+            <!-- END Basic Form Elements Block -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="block full">
+                <div class="block-title">
+                    <h2><strong>Assigned</strong> Doctor</h2>
+                </div>
+                <div class="table-responsive">
+                    <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center"><i class="gi gi-user"></i></th>
+                                <th>Doctor</th>
+                                <th>Patient</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for i in newdoc%}
+                            <tr>
+                                <td class="text-center">{{i.patient.user.id}}</td>
+                                <td class="text-center"><img src="{%static 'front/'%}img/placeholders/avatars/avatar15.jpg" alt="avatar" class="img-circle"></td>
+                                <td><a href="javascript:void(0)">{{i.doctor.full_name | title}}</a></td>
+                                <td><a href="javascript:void(0)">{{i.patient.full_name | title}}</a></td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <a href="{% url 'delete_assigned_doctor' id=i.pk %}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="block full">
+                <div class="block-title">
+                    <h2><strong>Assigned</strong> Assistant</h2>
+                </div>
+                <div class="table-responsive">
+                    <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center"><i class="gi gi-user"></i></th>
+                                <th>Doctor</th>
+                                <th>Assistant</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for i in newass%}
+                            <tr>
+                                <td class="text-center">{{i.doctor.user.id}}</td>
+                                <td class="text-center"><img src="{%static 'front/'%}img/placeholders/avatars/avatar15.jpg" alt="avatar" class="img-circle"></td>
+                                <td><a href="javascript:void(0)">{{i.doctor.full_name | title}}</a></td>
+                                <td><a href="javascript:void(0)">{{i.assistant.full_name | title}}</a></td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <a href="{% url 'delete_assigned_assistant' id=i.pk %}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Datatables Content -->
+</div>
+{%endblock main_content%}

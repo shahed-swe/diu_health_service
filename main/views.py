@@ -312,7 +312,7 @@ def crudModerator(request):
                 first_name = request.POST.get('moderatorFirstname'),
                 last_name = request.POST.get('moderatorLastname'),
                 email = request.POST.get('moderatorEmail'),
-                is_assistant = True,
+                is_moderator = True,
                 is_active = True
             )
             user.set_password(request.POST.get('moderatorPassword1'))
@@ -362,6 +362,134 @@ def delete_moderator(request, id):
                 user.delete()
                 mod.delete()
                 return redirect('/crudmoderator')
-        return render(request, 'delete_assistant_view.html', {"title":"Assistant Update","assis":mod})
+        return render(request, 'delete_moderator_view.html', {"title":"Moderator Update","assis":mod})
+    else:
+        return redirect('/')
+# moderator crud system
+def crudDriver(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        driver = Driver.objects.all()
+        context = {'title':"Manage Driver", 'driver':driver}
+        if request.method == "POST":
+            user = User(
+                username = request.POST.get('driverUsername'),
+                first_name = request.POST.get('driverFirstname'),
+                last_name = request.POST.get('driverLastname'),
+                email = request.POST.get('driverEmail'),
+                is_driver = True,
+                is_active = True
+            )
+            user.set_password(request.POST.get('driverPassword1'))
+            user.save()
+            print(user.email)
+            print(user)
+            driver = Driver(
+                user = user,
+                driver_id = request.POST.get('driverId'),
+                full_name = user.first_name+ ' '+user.last_name,
+                address = request.POST.get('driverAddress'),
+                age = request.POST.get('driverAge'),
+                phone_no = request.POST.get('driverPhoneno')
+            )
+            driver.save()
+            print(driver.age)
+        return render(request, 'crud_driver.html',context)
+    else:
+        return redirect('/')
+
+# edit view of assistant, only accessible for admin
+def edit_driver(request, id):
+    if request.user.is_authenticated and request.user.is_superuser:
+        driver = Driver.objects.filter(pk=id)
+        user = User.objects.get(pk=id)
+        if request.method == "POST":
+            driver = Driver(
+                user = user,
+                driver_id = request.POST.get('driverId'),
+                full_name = user.first_name+ ' '+user.last_name,
+                address = request.POST.get('driverAddress'),
+                age = request.POST.get('driverAge'),
+                phone_no = request.POST.get('driverPhoneno')
+            )
+            driver.save()
+            return redirect('/cruddriver')
+        return render(request,'edit_driver_view.html',{"title":"Update driver","driver":driver})
+    else:
+        return redirect('/')
+
+# delete view of assistant, only accessible for admin
+def delete_driver(request, id):
+    if request.user.is_authenticated and request.user.is_superuser:
+        driver = Driver.objects.filter(pk=id)
+        user = User.objects.get(pk=id)
+        if request.method == "POST":
+            val = request.POST.get('button-value')
+            if val == "Yes":
+                # print("Assistant Deleted")
+                user.delete()
+                driver.delete()
+                # print(user, "Profile Deleted")
+                return redirect('/cruddriver')
+        return render(request, 'delete_driver_view.html', {"title":"Driver Update","assis":driver})
+    else:
+        return redirect('/')
+
+# control information about doctor, patient and assistant of which one is assigned for whom
+def control_info(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        doc = Doctor.objects.all()
+        pat = Student.objects.all()
+        assis = Assistant.objects.all()
+        newdoc = AssignedDoctor.objects.all()
+        newass = AssignAssistant.objects.all()
+        context = {"title":"Control Info","doc":doc,"pat":pat,"assis":assis,"newdoc":newdoc,"newass":newass}
+        if request.method == "POST":
+            if request.POST.get('assigndoctor') == "1":
+                doctor = request.POST.get('doctor1')
+                patient = request.POST.get('patient1')
+                if doctor != "" and patient != "":
+                    assigndoc = AssignedDoctor(
+                        patient = Student.objects.get(pk=patient),
+                        doctor = Doctor.objects.get(pk=doctor)
+                    )
+                    assigndoc.save()
+                    return redirect('/control_info')
+            elif request.POST.get('assignassistant') == "2":
+                doctor = request.POST.get('doctor2')
+                assistant = request.POST.get('assistant1')
+                if doctor != "" and assistant != "":
+                    assignassis = AssignAssistant(
+                        doctor = Doctor.objects.get(pk=doctor),
+                        assistant = Assistant.objects.get(pk=assistant)
+                    )
+                    assignassis.save()
+                    return redirect('/control_info')
+        return render(request, 'control_info.html',context)
+    else:
+        return redirect('/')
+
+# delete view of assigned doctor, only available for admin
+def delete_assigned_doctor(request, id):
+    if request.user.is_authenticated and request.user.is_superuser:
+        assign_doctor = AssignedDoctor.objects.filter(pk=id)
+        if request.method == "POST":
+            val = request.POST.get('button-value')
+            if val == "Yes":
+                assign_doctor.delete()
+                return redirect('/control_info')
+        return render(request, 'delete_assigned_doctor.html')
+    else:
+        return redirect('/')
+
+# delete view of assigned assistant, only available for admin
+def delete_assigned_assistant(request, id):
+    if request.user.is_authenticated and request.user.is_superuser:
+        assign_assistant = AssignAssistant.objects.filter(pk=id)
+        if request.method == "POST":
+            val = request.POST.get('button-value')
+            if val == "Yes":
+                assign_assistant.delete()
+                return redirect('/control_info')
+        return render(request, 'delete_assigned_assistant.html')
     else:
         return redirect('/')
