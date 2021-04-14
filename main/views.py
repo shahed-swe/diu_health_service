@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from .models import *
 from django.http import HttpResponse
 import requests
+import datetime
 # Create your views here.
 def home(request):
     if not request.user.is_authenticated:
@@ -491,5 +492,91 @@ def delete_assigned_assistant(request, id):
                 assign_assistant.delete()
                 return redirect('/control_info')
         return render(request, 'delete_assigned_assistant.html')
+    else:
+        return redirect('/')
+
+def emergency_msg(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        msg = EmergencyMsg.objects.all()
+        context = {"msg":msg,"title":"Emergency Message"}
+        return render(request, 'emergencymsg.html', context)
+    else:
+        return redirect('/')
+
+def update_msg_status(request,id):
+    if request.user.is_authenticated and request.user.is_superuser:
+        msg = EmergencyMsg.objects.filter(pk=id).update(solve=True)
+        return redirect('/emergency_msg')
+    else:
+        return redirect('/')
+
+def delete_msg_status(request,id):
+    if request.user.is_authenticated and request.user.is_superuser:
+        msg = EmergencyMsg.objects.filter(pk = id)
+        if request.method == "POST":
+            val = request.POST.get('button-value')
+            if val == "Yes":
+                msg.delete()
+                # print("message deleted")
+                return redirect('/emergency_msg')
+        return render(request, 'delete_msg.html', {"msg":msg})
+    else:
+        return redirect('/')
+
+
+def give_prescription(request):
+    if request.user.is_authenticated and request.user.is_doctor:
+        pat = Student.objects.all()
+        med = Medicine.objects.all()
+        assign = AssignMedicine.objects.all()
+        context = {"title":"Give Prescription","patient":pat,"medicine":med,'assignedMedicine':assign}
+        if request.method == 'POST':
+            medic = request.POST.getlist('medicine')
+            medic = [int(i) for i in medic if i != None]
+            h,m,s = map(int, request.POST.get('time').split(":"))
+            assin = AssignMedicine(
+                student = Student.objects.get(pk = request.POST.get('patient')),
+                medicine_time = datetime.time(h,m,s)
+            )
+            assin.save()
+            for i in medic:
+                assin.medicine.add(i)
+            return redirect('/give_prescription')
+        return render(request, 'give_prescription.html', context)
+
+    else:
+        return redirect('/')
+
+# delete prescription view only for doctor
+def delete_prescribed_data(request,id):
+    if request.user.is_authenticated and request.user.is_doctor:
+        assin = AssignMedicine.objects.filter(pk=id)
+        if request.method == 'POST':
+            val = request.POST.get('button-value')
+            assin.delete()
+            return redirect('/give_prescription')
+        return render(request, 'delete_prescription.html',{"title":"Delete Prescription"})
+    else:
+        return redirect('/')
+
+def health_condition(request):
+    if request.user.is_authenticated and request.user.is_doctor:
+        cns = ConditionInfo.objects.all()
+        context = {"condition":cns, "title":"Patient Condition Information"}
+        return render(request, 'condition_info.html', context)
+    else:
+        return redirect('/')
+
+def update_condition_info(request, id):
+    if request.user.is_authenticated and request.user.is_doctor:
+        condition = ConditionInfo.objects.filter(id=id).update(emergency_condition=True)
+        return redirect('/health_condition')
+    else:
+        return redirect('/')
+
+def update_solve_info(request, id):
+    if request.user.is_authenticated and request.user.is_doctor:
+        condition = ConditionInfo.objects.filter(id=id).update(solve=True)
+        return redirect('/health_condition')
     else:
         return redirect('/')

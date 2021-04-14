@@ -131,7 +131,7 @@
         </div>
         <div class="col-sm-6 col-lg-3">
             <!-- Widget -->
-            <a href="/reports_and_feedbacks" class="widget widget-hover-effect1">
+            <a href="{%url 'emergency_msg'%}" class="widget widget-hover-effect1">
                 <div class="widget-simple">
                     <div class="widget-icon pull-left themed-background-fire animation-fadeIn">
                         <i class="gi gi-envelope"></i>
@@ -191,7 +191,7 @@
     <!-- Widgets Row -->
     <div class="row text-center">
         <div class="col-sm-6 col-lg-3">
-            <a href="/reports_and_feedbacks" class="widget widget-hover-effect1effect2">
+            <a href="{% url 'emergency_msg'%}" class="widget widget-hover-effect1effect2">
                 <div class="widget-extra themed-background">
                     <h4 class="widget-content-light"><strong>Pending</strong> Reports</h4>
                 </div>
@@ -201,7 +201,7 @@
         <div class="col-sm-6 col-lg-3">
             <a href="javascript:void(0)" class="widget widget-hover-effect2">
                 <div class="widget-extra themed-background-dark">
-                    <h4 class="widget-content-light"><strong>Total</strong> Nurse Assigned</h4>
+                    <h4 class="widget-content-light"><strong>Total</strong> Assistant Assigned</h4>
                 </div>
                 <div class="widget-extra-full"><span class="h2 themed-color-dark animation-expandOpen">{{assign_nurse}}</span></div>
             </a>

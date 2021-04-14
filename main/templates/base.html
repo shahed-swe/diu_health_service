@@ -91,7 +91,7 @@
                                         <a href="{%url 'control_info'%}">Control Info</a>
                                     </li>
                                     <li>
-                                        <a href="/reports_and_feedbacks">Check Feedback/Reports</a>
+                                        <a href="{%url 'emergency_msg'%}">Emergency Messages</a>
                                     </li>
 
                                 </ul>
@@ -99,19 +99,13 @@
                                 <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="fa fa-home sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Doc Control</span></a>
                                 <ul>
                                     <li>
-                                        <a href="/give_prescription">Give Prescription</a>
+                                        <a href="{%url 'give_prescription'%}">Give Prescription</a>
                                     </li>
                                     <li>
-                                        <a href="/patient_health">Patient health Check</a>
-                                    </li>
-                                    <li>
-                                        <a href="/assign_nurse">Assign Nurse</a>
+                                        <a href="{%url 'health_condition'%}">Patient health Check</a>
                                     </li>
                                     <li>
                                         <a href="/give_report">Give Report</a>
-                                    </li>
-                                    <li>
-                                        <a href="/reports_and_feedbacks">Feedbacks</a>
                                     </li>
                                 </ul>
                                 {%elif user.is_assistant%}

@@ -1,0 +1,85 @@
+{%extends 'base.html'%}
+<!--  -->
+{%load static%}
+<!-- static file loaded -->
+{%block main_content%}
+<!-- main content block starts -->
+<div id="page-content">
+    <!-- Datatables Header -->
+    <div class="content-header">
+        <div class="header-section">
+            <h1>
+                <i class="fa fa-table"></i>Patient Health<br><small>In nothing do men more nearly approach the gods than in giving health to men.</small><br/><small>– Marcus Tullius Cicero</small>
+            </h1>
+        </div>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Tables</li>
+        <li><a href="">Health</a></li>
+    </ul>
+    <!-- END Datatables Header -->
+
+    <!-- Datatables Content -->
+    <div class="block full">
+        <div class="block-title">
+            <h2><strong>Health</strong> Condition</h2>
+        </div>
+        <div class="table-responsive">
+            <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th class="text-center"><i class="gi gi-user"></i></th>
+                        <th>Patient</th>
+                        <th>Condition</th>
+                        <th>Emergency Condition</th>
+                        <th>Solved</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for i in condition%}
+                    <tr>
+                        <td class="text-center">{{i.patient.user.id}}</td>
+                        <td class="text-center"><img src="{%static 'front/'%}img/placeholders/avatars/avatar15.jpg" alt="avatar" class="img-circle"></td>
+                        <td><a href="javascript:void(0)">{{i.patient.full_name | title}}</a></td>
+                        <td><span class="text-center">{{i.patient_condition}}</span></td>
+                        {%if i.emergency_condition == True%}
+                        <td><a href="{%url 'update_condition_info' id=i.id%}" class="take"><span class="text-center label label-success">Emergency</span></a></td>
+                        {%elif i.emergency_condition == False%}
+                        <td><a href="{%url 'update_condition_info' id=i.id%}" class="take"><span class="text-center label label-danger">Not Emergency</span></a></td>
+                        {%endif%}
+                        <!--solve  -->
+                        {%if i.solve == True%}
+                        <td><a href="#" class="take"><span class="text-center label label-success">Emergency</span></a></td>
+                        {%elif i.solve == False%}
+                        <td><a href="#" class="take"><span class="text-center label label-danger">Not Emergency</span></a></td>
+                        {%endif%}
+                        <!-- delete -->
+                        {%comment%}
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <a href="{% url 'delete_patient_health' id=i.pk %}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                            </div>
+                        </td>
+                        {%endcomment%}
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- END Datatables Content -->
+</div>
+{%endblock main_content%}
+<!--  -->
+{%block main_script%}
+<!-- scripts start -->
+<script src="{%static 'front/'%}js/pages/tablesDatatables.js"></script>
+<script>
+    $(function() {
+        TablesDatatables.init();
+    });
+</script>
+<!-- scripts ends -->
+{%endblock main_script%}

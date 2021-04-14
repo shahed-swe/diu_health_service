@@ -25,4 +25,12 @@ urlpatterns = [
     path('control_info/',views.control_info, name="control_info"),
     url(r'^delete_assigned_doctor/(?P<id>.*)/$',views.delete_assigned_doctor, name="delete_assigned_doctor"),
     url(r'^delete_assigned_assistant/(?P<id>.*)/$',views.delete_assigned_assistant, name="delete_assigned_assistant"),
+    path('emergency_msg/', views.emergency_msg, name="emergency_msg"),
+    url(r'^update_emergency_msg/(?P<id>.*)/$',views.update_msg_status, name="update_msg_status"),
+    url(r'^delete_emergency_msg/(?P<id>.*)/$',views.delete_msg_status, name="delete_msg_status"),
+    path('give_prescription/', views.give_prescription,name="give_prescription"),
+    url(r'^delete_prescription/(?P<id>.*)/$', views.delete_prescribed_data, name="delete_prescribed_data"),
+    path('health_condition/',views.health_condition,name="health_condition"),
+    url(r'^update_condition_info/(?P<id>.*)/$',views.update_condition_info,name="update_condition_info"),
+    url(r'^update_solve_info/(?P<id>.*)/$',views.update_solve_info,name="update_solve_info"),
 ]
