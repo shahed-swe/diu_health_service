@@ -56,13 +56,11 @@
                         <td><a href="{%url 'update_solve_info' id=i.id%}" class="take"><span class="text-center label label-danger">Not Emergency</span></a></td>
                         {%endif%}
                         <!-- delete -->
-                        {%comment%}
                         <td class="text-center">
                             <div class="btn-group">
-                                <a href="{% url 'delete_patient_health' id=i.pk %}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                                <a href="{% url 'delete_condition_report' id=i.pk %}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
                             </div>
                         </td>
-                        {%endcomment%}
                     </tr>
                     {%endfor%}
                 </tbody>
