@@ -51,9 +51,9 @@
                         {%endif%}
                         <!--solve  -->
                         {%if i.solve == True%}
-                        <td><a href="#" class="take"><span class="text-center label label-success">Emergency</span></a></td>
+                        <td><a href="{%url 'update_solve_info' id=i.id%}" class="take"><span class="text-center label label-success">Emergency</span></a></td>
                         {%elif i.solve == False%}
-                        <td><a href="#" class="take"><span class="text-center label label-danger">Not Emergency</span></a></td>
+                        <td><a href="{%url 'update_solve_info' id=i.id%}" class="take"><span class="text-center label label-danger">Not Emergency</span></a></td>
                         {%endif%}
                         <!-- delete -->
                         {%comment%}
