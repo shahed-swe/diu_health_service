@@ -586,8 +586,8 @@ def delete_condition_report(request, id):
         condition = ConditionInfo.objects.filter(id=id)
         if request.method == 'POST':
             val = request.POST.get('button-value')
-            # condition.delete()
-            print("condition deleted")
+            condition.delete()
+            # print("condition deleted")
             return redirect('/health_condition')
         return render(request, 'delete_patient_health.html',{"title":"Delete Patient Condition Information"})
     else:
