@@ -211,3 +211,12 @@ class EmergencyMsg(models.Model):
     def __str__(self):
         return self.student.full_name + ' ' + self.message[0:10]
 
+class Feedback(models. Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, blank=True, null=True)
+    feedback = models.CharField(max_length=120, blank=True, null=True)
+
+    class Meta:
+        db_table = "feedback"
+
+    def __str__(self):
+        return self.student.full_name + ' ' + self.feedback[0:10]
