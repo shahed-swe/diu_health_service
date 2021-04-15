@@ -39,7 +39,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label">Patient</label>
                         <div class="col-md-9">
-                            <select name="driver" id="driver" class="form-control">
+                            <select name="patient" id="driver" class="form-control">
                                 <option value="">Choose...</option>
                                 {%for i in patient%}
                                 <option value="{{i.user.id}}">{{i.full_name}}</option>
@@ -50,7 +50,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="example-text-input">Driver</label>
                         <div class="col-md-9">
-                            <select name="hospital" id="hospital" class="form-control">
+                            <select name="driver" id="hospital" class="form-control">
                                 <option value="">Choose...</option>
                                 {%for i in driver%}
                                 <option value="{{i.user.id}}">{{i.full_name}}</option>
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="example-text-input">Amout</label>
+                        <label class="col-md-3 control-label" for="example-text-input">Amount</label>
                         <div class="col-md-9">
                             <input class="form-control" name="amount" id="amount" placeholder="Enter Billing Amount" />
                         </div>
@@ -114,7 +114,11 @@
                                 {%elif i.paid_driver == False%}
                                 <td><a href="#" class="take"><span class="text-center label label-danger">Not Paid</span></a></td>
                                 {%endif%}
-                                <td><a href="javascript:void(0)">{{i.hospital_name.hospital_name | title}}</a></td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <a href="{% url 'delete_billing_info' id=i.pk %}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                                    </div>
+                                </td>
                             </tr>
                             {%endfor%}
                         </tbody>

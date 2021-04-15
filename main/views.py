@@ -695,12 +695,24 @@ def set_billing_info(request):
             driver_id = request.POST.get('driver')
             amount = request.POST.get('amount')
             if pat_id != "" and driver_id != "" and amount != "":
-                BillingInfo.objects.create(
+                billing = BillingInfo(
                     patient = Student.objects.get(pk=pat_id),
                     driver = Driver.objects.get(pk=driver_id),
-                    amount = amount
+                    bill = amount
                 )
+                billing.save()
                 return redirect('/bill_info')
         return render(request, 'set_billing_info.html', context)
+    else:
+        return redirect('/')
+
+def delete_billing_info(request,id):
+    if request.user.is_authenticated and request.user.is_assistant:
+        bill = BillingInfo.objects.filter(pk=id)
+        if request.method == "POST":
+            val = request.POST.get('button-value')
+            bill.delete()
+            return redirect('/bill_info')
+        return render(request, 'delete_billing_info.html', {"title":"Delete Bill Information","bill":bill})
     else:
         return redirect('/')
