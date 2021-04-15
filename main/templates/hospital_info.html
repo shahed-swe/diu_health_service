@@ -1,0 +1,100 @@
+{%extends 'base.html'%}
+<!--  -->
+{%load static%}
+<!-- static file loaded -->
+{%block main_content%}
+<!-- main content block starts -->
+<div id="page-content">
+    <!-- Datatables Header -->
+    <div class="content-header">
+        <div class="header-section">
+            <h1>
+                <i class="fa fa-table"></i>Hospital<br><small>Wherever the art of medicine is loved, there is also a love of humanity.</small><br/><small>– Hippocrates</small>
+            </h1>
+        </div>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Tables</li>
+        <li><a href="">Hospital</a></li>
+    </ul>
+    <!-- END Datatables Header -->
+
+    <!-- Datatables Content -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Basic Form Elements Block -->
+            <div class="block">
+                <!-- Basic Form Elements Title -->
+                <div class="block-title">
+                    <div class="block-options pull-right">
+                        <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-default toggle-bordered enable-tooltip" data-toggle="button" title="" data-original-title="Toggles .form-bordered class">No Borders</a>
+                    </div>
+                    <h2><strong>Hospital Name</strong> Create</h2>
+                </div>
+                <!-- END Form Elements Title -->
+
+                <!-- Basic Form Elements Content -->
+                <form method="POST" class="form-horizontal form-bordered">
+                    {%csrf_token%}
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Hospital</label>
+                        <div class="col-md-9">
+                            <input class="form-control" name="hospital_name" id="hospital_name" placeholder="Enter Hospital Name" />
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Submit</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Basic Form Elements Content -->
+            </div>
+            <!-- END Basic Form Elements Block -->
+        </div>
+    </div>
+    <div class="block full">
+        <div class="block-title">
+            <h2><strong>Medicine</strong> Companies</h2>
+        </div>
+        <div class="table-responsive">
+            <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th>Hospital Name</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for i in hospital%}
+                    <tr>
+                        <td class="text-center">{{i.id}}</td>
+                        <td><a href="javascript:void(0)">{{i.hospital_name | title}}</a></td>
+                        <td class="text-center">
+                            <div class="btn-group">
+
+                                <a href="{% url 'edit_hospital_name' id=i.pk %}" data-toggle="tooltip" title="Edit" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+                                <a href="{% url 'delete_hospital_name' id=i.pk %}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- END Datatables Content -->
+</div>
+{%endblock main_content%}
+<!--  -->
+{%block main_script%}
+<!-- scripts start -->
+<script src="{%static 'front/'%}js/pages/tablesDatatables.js"></script>
+<script>
+    $(function() {
+        TablesDatatables.init();
+    });
+</script>
+<!-- scripts ends -->
+{%endblock main_script%}

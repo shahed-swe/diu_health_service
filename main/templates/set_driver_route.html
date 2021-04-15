@@ -1,0 +1,105 @@
+{%extends 'base.html'%}
+<!--  -->
+{%load static%}
+<!-- static file loaded -->
+{%block main_content%}
+<!-- main content block starts -->
+<div id="page-content">
+    <!-- Datatables Header -->
+    <div class="content-header">
+        <div class="header-section">
+            <h1>
+                <i class="fa fa-table"></i>Driver Route<br><small>In nothing do men more nearly approach the gods than in giving health to men.</small><br/><small>– Marcus Tullius Cicero</small>
+            </h1>
+        </div>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Tables</li>
+        <li><a href="">Route</a></li>
+    </ul>
+    <!-- END Datatables Header -->
+
+    <!-- Datatables Content -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Basic Form Elements Block -->
+            <div class="block">
+                <!-- Basic Form Elements Title -->
+                <div class="block-title">
+                    <div class="block-options pull-right">
+                        <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-default toggle-bordered enable-tooltip" data-toggle="button" title="" data-original-title="Toggles .form-bordered class">Add / Update</a>
+                    </div>
+                    <h2><strong>Set</strong> Route For Hospital</h2>
+                </div>
+                <!-- END Form Elements Title -->
+
+                <!-- Basic Form Elements Content -->
+                <form method="POST" class="form-horizontal form-bordered">
+                    {%csrf_token%}
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Driver</label>
+                        <div class="col-md-9">
+                            <select name="driver" id="driver" class="form-control">
+                                <option value="">Choose...</option>
+                                {%for i in driver%}
+                                <option value="{{i.user.id}}">{{i.full_name}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Hospital Name</label>
+                        <div class="col-md-9">
+                            <select name="hospital" id="hospital" class="form-control">
+                                <option value="">Choose...</option>
+                                {%for i in hospital%}
+                                <option value="{{i.id}}">{{i.hospital_name}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Submit</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Basic Form Elements Content -->
+            </div>
+            <!-- END Basic Form Elements Block -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="block full">
+                <div class="block-title">
+                    <h2><strong>Assigned</strong> Doctor</h2>
+                </div>
+                <div class="table-responsive">
+                    <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center"><i class="gi gi-user"></i></th>
+                                <th>Driver</th>
+                                <th>Hospital Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for i in route%}
+                            <tr>
+                                <td class="text-center">{{i.driver.user.id}}</td>
+                                <td class="text-center"><img src="{%static 'front/'%}img/placeholders/avatars/avatar15.jpg" alt="avatar" class="img-circle"></td>
+                                <td><a href="javascript:void(0)">{{i.driver.full_name | title}}</a></td>
+                                <td><a href="javascript:void(0)">{{i.hospital_name.hospital_name | title}}</a></td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Datatables Content -->
+</div>
+{%endblock main_content%}

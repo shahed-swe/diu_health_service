@@ -105,23 +105,23 @@
                                         <a href="{%url 'health_condition'%}">Patient health Check</a>
                                     </li>
                                     <li>
-                                        <a href="{%url 'health_condition'%}">Feedback's</a>
+                                        <a href="{%url 'feedback'%}">Feedback's</a>
                                     </li>
                                 </ul>
                                 {%elif user.is_assistant%}
                                 <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="fa fa-home sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Assist Control</span></a>
                                 <ul>
                                     <li>
-                                        <a href="/company">Medicine Companies</a>
+                                        <a href="{%url 'emergency_request'%}">Emergency Requests</a>
                                     </li>
                                     <li>
-                                        <a href="/medicine">Medicine</a>
+                                        <a href="{%url 'set_hospital_route'%}">Set Hospital Route</a>
                                     </li>
                                     <li>
-                                        <a href="/setbill">Set Bill</a>
+                                        <a href="{%url 'add_hospital_info'%}">Add Hospital Information</a>
                                     </li>
                                     <li>
-                                        <a href="/get_bill">Get Bill</a>
+                                        <a href="/get_bill">Set Billing Information</a>
                                     </li>
                                 </ul>
                                 {%elif user.is_nurse%}

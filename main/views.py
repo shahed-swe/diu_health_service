@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
 from .models import *
-from django.http import HttpResponse
+from django.http import HttpResponse, request
 import requests
 import datetime
 # Create your views here.
@@ -590,5 +590,95 @@ def delete_condition_report(request, id):
             # print("condition deleted")
             return redirect('/health_condition')
         return render(request, 'delete_patient_health.html',{"title":"Delete Patient Condition Information"})
+    else:
+        return redirect('/')
+
+def feedback(request):
+    if request.user.is_authenticated and request.user.is_doctor:
+        feeds = Feedback.objects.all()
+        context = {"feed":feeds,"title":"Feedbacks"}
+        return render(request, 'feedbacks.html',context)
+    else:
+        return redirect('/')
+
+def delete_feedbacks(request,id):
+    if request.user.is_authenticated and request.user.is_doctor:
+        feed = Feedback.objects.filter(pk=id)
+        if request.method == "POST":
+            val = request.POST.get('button-value')
+            if val == "Yes":
+                feed.delete()
+                return redirect('/feedbacks')
+        return render(request, 'delete_feedback.html', {"feed":feed})
+    else:
+        return redirect('/')
+
+def emergency_request(request):
+    if request.user.is_authenticated and request.user.is_assistant:
+        # this view will only show person name which condition is emergency and need to drive him to the hospital
+        emergency = ConditionInfo.objects.filter(emergency_condition=True)
+        return render(request, 'emergency_condition.html',{"condition":emergency})
+    else:
+        return redirect('/')
+
+
+def set_hospital_route(request):
+    if request.user.is_authenticated and request.user.is_assistant:
+        driver = Driver.objects.filter(on_duty=False)
+        hospital = HospitalName.objects.all()
+        route = HospitalRoute.objects.all()
+        context = {"title":"Set Route For Driver", "driver":driver,"hospital":hospital,"route":route}
+        if request.method == "POST":
+            driver = request.POST.get('driver')
+            hospital = request.POST.get('hospital')
+            if driver != "" and hospital != "":
+                new_route = HospitalRoute(
+                    driver = Driver.objects.get(pk=driver),
+                    hospital_name = HospitalName.objects.get(pk=hospital)
+                )
+                new_route.save()
+                Driver.objects.filter(pk=driver).update(on_duty=True)
+                return redirect('/hospital_route')
+        return render(request,'set_driver_route.html',context)
+    else:
+        return redirect('/')
+
+
+def add_hospital_info(request):
+    if request.user.is_authenticated and request.user.is_assistant:
+        hospital = HospitalName.objects.all()
+        context = {"title":"Hospital Information","hospital":hospital}
+
+        if request.method == "POST":
+            hospital_name = request.POST.get('hospital_name')
+            hospital = HospitalName(
+                hospital_name = hospital_name,
+            )
+            hospital.save()
+        return render(request, 'hospital_info.html', context)
+    else:
+        return redirect('/')
+
+def edit_hospital_name(request, id):
+    if request.user.is_authenticated and request.user.is_assistant:
+        hospital = HospitalName.objects.filter(pk=id)
+        context = {"title":"Edit Hospital Information","hospital":hospital[0].hospital_name}
+        if request.method == "POST":
+            hospital_name = request.POST.get('hospital_name')
+            HospitalName.objects.filter(pk=id).update(hospital_name=hospital_name)
+            return redirect('/hospital_info')
+        return render(request, 'edit_hospital_name.html',context)
+    else:
+        return redirect('/')
+
+def delete_hospital_name(request, id):
+    if request.user.is_authenticated and request.user.is_assistant:
+        hospital = HospitalName.objects.filter(pk=id)
+        if request.method == 'POST':
+            val = request.POST.get('button-value')
+            if val == "Yes":
+                hospital.delete()
+                return redirect('/hospital_info')
+        return render(request, 'delete_hospital_name.html',{"hospital":hospital,"title":"Delete Hospital"})
     else:
         return redirect('/')

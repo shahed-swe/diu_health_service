@@ -78,6 +78,7 @@ class Driver(models.Model):
     address = models.CharField(max_length=200, blank=True, null=True)
     age = models.CharField(max_length=200, blank=True, null=True)
     phone_no = models.CharField(max_length=200, blank=True, null=True)
+    on_duty = models.BooleanField(default=False)
 
     class Meta:
         db_table = "driver_info"
