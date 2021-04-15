@@ -41,7 +41,8 @@ urlpatterns = [
     path('hospital_info/',views.add_hospital_info, name="add_hospital_info"),
     url(r'^edit_hospital_name/(?P<id>.*)/$',views.edit_hospital_name, name="edit_hospital_name"),
     url(r'^delete_hospital_name/(?P<id>.*)/$',views.delete_hospital_name, name="delete_hospital_name"),
-
+    path('bill_info/', views.set_billing_info, name="set_billing_info"),
+    
 
 
 ]

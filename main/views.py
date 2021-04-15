@@ -682,3 +682,25 @@ def delete_hospital_name(request, id):
         return render(request, 'delete_hospital_name.html',{"hospital":hospital,"title":"Delete Hospital"})
     else:
         return redirect('/')
+
+
+def set_billing_info(request):
+    if request.user.is_authenticated and request.user.is_assistant:
+        patient = Student.objects.all()
+        driver = Driver.objects.filter(on_duty=True)
+        bill = BillingInfo.objects.all()
+        context = {"title":"Set Bill For Driver", "patient":patient,"driver":driver,"bill":bill}
+        if request.method == "POST":
+            pat_id = request.POST.get('patient')
+            driver_id = request.POST.get('driver')
+            amount = request.POST.get('amount')
+            if pat_id != "" and driver_id != "" and amount != "":
+                BillingInfo.objects.create(
+                    patient = Student.objects.get(pk=pat_id),
+                    driver = Driver.objects.get(pk=driver_id),
+                    amount = amount
+                )
+                return redirect('/bill_info')
+        return render(request, 'set_billing_info.html', context)
+    else:
+        return redirect('/')

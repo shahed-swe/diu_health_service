@@ -115,13 +115,14 @@
                                         <a href="{%url 'emergency_request'%}">Emergency Requests</a>
                                     </li>
                                     <li>
-                                        <a href="{%url 'set_hospital_route'%}">Set Hospital Route</a>
-                                    </li>
-                                    <li>
                                         <a href="{%url 'add_hospital_info'%}">Add Hospital Information</a>
                                     </li>
                                     <li>
-                                        <a href="/get_bill">Set Billing Information</a>
+                                        <a href="{%url 'set_hospital_route'%}">Set Hospital Route</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{%url 'set_billing_info'%}">Set Billing Information</a>
                                     </li>
                                 </ul>
                                 {%elif user.is_nurse%}

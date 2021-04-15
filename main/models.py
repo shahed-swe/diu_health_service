@@ -179,7 +179,7 @@ class AssignAssistant(models.Model):
 class HospitalRoute(models.Model):
     driver = models.OneToOneField(Driver, on_delete=models.CASCADE, primary_key=True)
     hospital_name = models.ForeignKey(HospitalName, on_delete=models.CASCADE, blank=True, null=True)
-    driver_spotted = models.BooleanField(default=False)
+    deliverd = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'hospital_route'
