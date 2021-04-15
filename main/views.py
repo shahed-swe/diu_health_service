@@ -716,3 +716,18 @@ def delete_billing_info(request,id):
         return render(request, 'delete_billing_info.html', {"title":"Delete Bill Information","bill":bill})
     else:
         return redirect('/')
+
+
+def update_patient_bill(request,id):
+    if request.user.is_authenticated and request.user.is_assistant:
+        BillingInfo.objects.filter(pk=id).update(patient_paid=True)
+        return redirect('/bill_info')
+    else:
+        return redirect('/')
+    
+def update_driver_bill(request,id):
+    if request.user.is_authenticated and request.user.is_assistant:
+        BillingInfo.objects.filter(pk=id).update(paid_driver=True)
+        return redirect('/bill_info')
+    else:
+        return redirect('/')

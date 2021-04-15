@@ -43,6 +43,8 @@ urlpatterns = [
     url(r'^delete_hospital_name/(?P<id>.*)/$',views.delete_hospital_name, name="delete_hospital_name"),
     path('bill_info/', views.set_billing_info, name="set_billing_info"),
     url(r'^delete_bill/(?P<id>.*)/$',views.delete_billing_info, name="delete_billing_info"),
+    url(r'^patient_bill/(?P<id>.*)/$',views.update_patient_bill, name="update_patient_bill"),
+    url(r'^driver_bill/(?P<id>.*)/$',views.update_driver_bill, name="update_driver_bill"),
 
 
 
