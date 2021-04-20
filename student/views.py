@@ -18,7 +18,7 @@ def patient(request):
     elif request.user.is_authenticated and request.user.is_assistant:
         return redirect('/')
     elif request.user.is_authenticated and request.user.is_driver:
-        return redirect('/')
+        return redirect('/driver/home')
     else:
         print(get_ip(request))
         print(request.user.first_name + ' ' + request.user.last_name)

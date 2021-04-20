@@ -1,0 +1,297 @@
+{%load static%}
+<!doctype html>
+<html lang="zxx">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{title}}</title>
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="{%static 'patient/'%}assets/css/style-starter.css">
+    <!-- Template CSS -->
+
+    <link href="//fonts.googleapis.com/css?family=Spartan:400,500,600,700,900&display=swap" rel="stylesheet">
+
+    <!-- Template CSS -->
+    <style>
+        .tophny-header {
+            background: #00ce7c;
+        }
+        
+        .cbp-spmenu h3 {
+            background-color: #1a1e23 !important;
+        }
+        
+        .search-right a.topuser span.fa,
+        a.hnysearch-icon span.fa {
+            background: #009c5e;
+        }
+        
+        .search-right .popup form button {
+            background: #00ce7c;
+        }
+        
+        .w3l-footer #movetop {
+            background: #00ce7c;
+        }
+        
+        .cbp-spmenu a:hover {
+            background: #00ce7c;
+        }
+        
+        .w3l-newsletter button.btn {
+            background: #00ce7c;
+        }
+        
+        .w3l-testimonials span.fa {
+            background: #00ce7c;
+        }
+        
+        .w3l-main-slider .banner-info-bg h4.sub-font {
+            color: #00ce7c;
+        }
+    </style>
+</head>
+
+<body class="cbp-spmenu-push">
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">
+        <h3>Menu</h3>
+
+        <ul>
+            {%if user.is_authenticated%}
+            <!--  -->
+            <li><a href="">Profile | {{user.first_name}}</a></li>
+            <li><a href="">Route</a></li>
+            <li><a href="">Bill</a></li>
+            {%else%}
+            <li><a href="{%url 'registration'%}">Registration</a>
+            </li>
+            <li><a href="{%url 'mylogin'%}">Login</a></li>
+            {%endif%}
+        </ul>
+    </nav>
+    <div class="main buttonset">
+        <!--/tophny-header-->
+        <div class="tophny-header">
+            <div class="container">
+                <div class="hny-topgds">
+                    <div class="menu-notify">
+                        <button id="showLeftPush"><span class="fa fa-bars" aria-hidden="true"></span></button>
+
+                    </div>
+                    <div class="logo text-center">
+                        <h1><a class="navbar-brand" href="{%url 'patient'%}">
+								Daffodil Health Service
+							</a></h1>
+                    </div>
+                    <div class="icon-left search-right text-right">
+                        {%if user.is_authenticated%}
+                        <a class="topuser" href="/logout">Logout</a>
+                        <!--  -->
+                        {%endif%}
+
+                        <!-- search popup -->
+                        <div id="search" class="pop-overlay">
+                            <div class="popup">
+                                <h3 class="hny-title two">Search Here</h3>
+                                <form action="#" method="post" class="search-box">
+                                    <input type="search" placeholder="Search your Keyword" name="search" required="required" autofocus="">
+                                    <button type="submit" class="btn">Search</button>
+                                </form>
+
+                            </div>
+                            <a class="close" href="#close">×</a>
+                        </div>
+                        <!-- /search popup -->
+                    </div>
+                </div>
+            </div>
+            <!--//tophny-header-->
+        </div>
+        {%block main_content%}
+        <!--  -->
+        {%endblock main_content%}
+        <!--//testimonials-->
+        <!-- footer-28 block -->
+        <section class="w3l-footer">
+            <footer class="footer-28">
+                <div class="footer-bg-layer">
+                    <div class="midd-footer-28 align-center py-lg-4 py-3 mt-5">
+                        <div class="container">
+                            <p class="copy-footer-28 text-center"> &copy; . All Rights Reserved. Design by
+                                <a href="https://github.com/shahed-swe/">Shahed</a></p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- move top -->
+            <button onclick="topFunction()" id="movetop" title="Go to top">
+				<span class="fa fa-arrow-up" aria-hidden="true"></span>
+			</button>
+            <script>
+                // When the user scrolls down 20px from the top of the document, show the button
+                window.onscroll = function() {
+                    scrollFunction()
+                };
+
+                function scrollFunction() {
+                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                        document.getElementById("movetop").style.display = "block";
+                    } else {
+                        document.getElementById("movetop").style.display = "none";
+                    }
+                }
+
+                // When the user clicks on the button, scroll to the top of the document
+                function topFunction() {
+                    document.body.scrollTop = 0;
+                    document.documentElement.scrollTop = 0;
+                }
+            </script>
+            <!-- /move top -->
+        </section>
+        <!-- //footer-28 block -->
+
+
+
+    </div>
+    <script src="{%static 'patient/'%}assets/js/jquery-3.3.1.min.js"></script>
+    <!--/top-nav-->
+    <script src="{%static 'patient/'%}assets/js/jquery-2.1.4.min.js"></script>
+    <script src="{%static 'patient/'%}assets/js/modernizr.custom.js"></script>
+    <script src="{%static 'patient/'%}assets/js/classie.js"></script>
+    <script>
+        var menuLeft = document.getElementById('cbp-spmenu-s1'),
+            showLeftPush = document.getElementById('showLeftPush'),
+            body = document.body;
+
+        showLeftPush.onclick = function() {
+            classie.toggle(this, 'active');
+            classie.toggle(body, 'cbp-spmenu-push-toright');
+            classie.toggle(menuLeft, 'cbp-spmenu-open');
+            disableOther('showLeftPush');
+        };
+
+        function disableOther(button) {
+            if (button !== 'showLeftPush') {
+                classie.toggle(showLeftPush, 'disabled');
+            }
+        }
+    </script>
+    <!--//top-nav-->
+    <!-- libhtbox -->
+    <script src="{%static 'patient/'%}assets/js/lightbox-plus-jquery.min.js"></script>
+    <!-- stats number counter-->
+    <script src="{%static 'patient/'%}assets/js/jquery.waypoints.min.js"></script>
+    <script src="{%static 'patient/'%}assets/js/jquery.countup.js"></script>
+    <script>
+        $('.counter').countUp();
+    </script>
+    <!-- //stats number counter -->
+    <script src="{%static 'patient/'%}assets/js/owl.carousel.js"></script>
+    <!-- script for banner slider-->
+    <script>
+        $(document).ready(function() {
+            $('.owl-one').owlCarousel({
+                loop: true,
+                margin: 0,
+                nav: false,
+                responsiveClass: true,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                autoplaySpeed: 1000,
+                autoplayHoverPause: false,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: false
+                    },
+                    480: {
+                        items: 1,
+                        nav: false
+                    },
+                    667: {
+                        items: 1,
+                        nav: true
+                    },
+                    1000: {
+                        items: 1,
+                        nav: true
+                    }
+                }
+            })
+        })
+    </script>
+    <!-- //script -->
+    <!-- /script-blogs-->
+    <script>
+        $(document).ready(function() {
+            $('.owl-two').owlCarousel({
+                loop: true,
+                margin: 30,
+                nav: false,
+                responsiveClass: true,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                autoplaySpeed: 1000,
+                autoplayHoverPause: false,
+                responsive: {
+                    0: {
+                        items: 2,
+                        nav: false
+                    },
+                    480: {
+                        items: 2,
+                        nav: false
+                    },
+                    700: {
+                        items: 2,
+                        nav: false
+                    },
+                    1090: {
+                        items: 3,
+                        nav: false
+                    }
+                }
+            })
+        })
+    </script>
+    <!-- //script-blogs-->
+    <!-- script for owlcarousel -->
+    <script>
+        $(document).ready(function() {
+            $('.owl-testimonial').owlCarousel({
+                loop: true,
+                margin: 0,
+                nav: false,
+                responsiveClass: true,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                autoplaySpeed: 1000,
+                autoplayHoverPause: false,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: false
+                    },
+                    480: {
+                        items: 1,
+                        nav: false
+                    },
+                    667: {
+                        items: 1,
+                        nav: false
+                    },
+                    1000: {
+                        items: 1,
+                        nav: false
+                    }
+                }
+            })
+        })
+    </script>
+    <!-- script for owlcarousel -->
+    <!-- disable body scroll which navbar is in active -->
+    <script src="assets/js/bootstrap.min.js"></script>

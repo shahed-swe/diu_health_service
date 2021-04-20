@@ -1,0 +1,173 @@
+{%extends 'patient_base.html'%}
+<!--  -->
+{%load static%}
+<!--  -->
+{%block main_content%}
+<!-- start -->
+<style>
+    .progress-tittle {
+        color: #00ce7c !important;
+    }
+    
+    li {
+        list-style-type: none;
+        padding-top: 10px;
+    }
+    
+    #amount {
+        font-weight: 600;
+        font-size: larger;
+    }
+    
+    #status {
+        padding-left: 20px;
+    }
+    
+    @media (max-width: 600px) {
+        .p-ab {
+            display: block !important;
+        }
+    }
+</style>
+<section class="w3l-about1 py-5" id="intro">
+    <div class="new-block top-bottom py-md-4">
+        <div class="container">
+            <div class="title-content text-center">
+                <h6 class="sub-title">Profile Information</h6>
+                <h3 class="hny-title"><span>{{user.first_name | title}}</span> {{user.last_name | title}} (Patient)</h3>
+            </div>
+            <div class="row mt-lg-5 mt- align-items-center">
+                <div class="col-lg-4 middle-section text-left">
+                    <div class="section-width mb-lg-4">
+                        {%if report%}
+                        <h3 class="hny-title">Status.</h3>
+                        {%for i in report%}
+                        <!--  -->
+                        <ul>
+                            <li>{{forloop.counter}}. <span>{{i.patient_condition}}</span></li>
+                        </ul>
+                        <!--  -->
+                        {%endfor%}
+                        <!--  -->
+                        {%endif%}
+                    </div>
+                </div>
+                <div class="col-lg-4 left-section my-lg-0 my-4 pr-lg-4">
+                    <div class="progress-abodehny-inf">
+                        <div class="progress-info">
+                            <h6 class="progress-tittle">Email</h6>
+                            <span>{{user.email}}</span>
+                        </div>
+                        <div class="progress-info">
+                            <h6 class="progress-tittle">Address
+                            </h6>
+                            <span>{{patient.address}}</span>
+                        </div>
+                        <div class="progress-info">
+                            <h6 class="progress-tittle">Age</h6>
+                            <span>{{patient.age}}</span>
+                        </div>
+                        <div class="progress-info">
+                            <h6 class="progress-tittle">Phone No</h6>
+                            <span>{{patient.phone_no}}</span>
+                        </div>
+                        <div class="progress-info">
+                            <h6 class="progress-tittle">Status</h6>
+                            <!--  -->
+                            {%if patient.released%}
+                            <!--  -->
+                            <span>Released</span>
+                            <!--  -->
+                            {%else%}
+                            <span>Not Released</span>
+                            <!--  -->
+                            {%endif%}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 right-section">
+                    <h3 class="hny-title">Assigned Medicine List</h3>
+                    <br>
+                    <!--  -->
+                    {%for i in medicine_name%}
+                    <p class="p-ab">{{forloop.counter}}. {{i}}</p>
+                    {%empty%}
+                    <p class="p-ab">No Medicine Needed</p>
+                    {%endfor%}
+                    <!--  -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w3l-about1 py-5" id="intro">
+    <div class="new-block top-bottom py-md-4">
+        <div class="container">
+            {%if bill or doctor%}
+            <div class="title-content text-center">
+                <h6 class="sub-title">Other Information</h6>
+            </div>
+            {%endif%}
+            <div class="row mt-lg-5 mt- align-items-center">
+                <div class="col-lg-4 middle-section text-left">
+                    <div class="section-width mb-lg-4">
+                        <h3 class="hny-title">Billing Information.</h3>
+                        {%for i in bill%}
+                        <!--  -->
+                        <span id="amount">{{i.bill}}/=</span>
+                        <!--  -->
+                        {%if i.paid == True%}
+                        <!--  -->
+                        <span id="status">Paid</span>
+                        <!--  -->
+                        {%else%}
+                        <!--  -->
+                        <span id="status">Not Paid</span>
+                        <!--  -->
+                        {%endif%}
+                        <!--  -->
+                        {%empty%}
+                        <span id="status">No Bill</span>
+                        <!--  -->
+                        {%endfor%}
+                        <!--  -->
+                    </div>
+                </div>
+                <div class="col-lg-4 left-section my-lg-0 my-4 pr-lg-4">
+                    <div class="section-width mb-lg-4">
+                        <h3 class="hny-title">Hospital Route</h3>
+                        {%for i in hosp%}
+                        <ul>
+                            <li><span>Driver: {{i.driver.full_name}}. <br> </span>{{i.hospital_name}}</li>
+                        </ul>
+                        {%empty%}
+                        <ul>
+                            <li>No Route Has Detected</li>
+                        </ul>
+                        {%endfor%}
+                        <!--  -->
+                    </div>
+                </div>
+                <div class="col-lg-4 right-section">
+                    {%if doctor%}
+                    <h3 class="hny-title">Assigned Doctor</h3>
+                    <br>
+                    <!--  -->
+
+                    <!--  -->
+                    {%for i in doctor%}
+                    <!--  -->
+                    <span>{{i.doctor.full_name | title}}</span>
+                    <!--  -->
+                    {%endfor%}
+                    <!--  -->
+
+                </div>
+                {%endif%}
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- end -->
+{%endblock main_content%}
