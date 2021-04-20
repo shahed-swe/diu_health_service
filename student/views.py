@@ -118,7 +118,7 @@ def emg_msg(request):
     else:
         return redirect('/patient/home')
 
-def driver(request):
+def patdriver(request):
     if request.user.is_authenticated and request.user.is_student:
         student = request.user.student
         stu_route = HospitalRoute.objects.filter(patient=student)

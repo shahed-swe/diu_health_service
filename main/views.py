@@ -113,7 +113,7 @@ def user_profile(request):
         return redirect('/')
 
 # only for student information controlling
-def patient(request):
+def patient_crud(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     elif request.user.is_superuser:
