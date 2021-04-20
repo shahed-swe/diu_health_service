@@ -36,6 +36,7 @@ class Student(models.Model):
     age = models.CharField(max_length=200, blank=True, null=True)
     phone_no = models.CharField(max_length=200, blank=True, null=True)
     released = models.BooleanField(default=False)
+    on_road = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'student_info'
@@ -178,6 +179,7 @@ class AssignAssistant(models.Model):
     
 class HospitalRoute(models.Model):
     driver = models.OneToOneField(Driver, on_delete=models.CASCADE, primary_key=True)
+    patient = models.ForeignKey(Student, on_delete=models.CASCADE, blank=True, null=True)
     hospital_name = models.ForeignKey(HospitalName, on_delete=models.CASCADE, blank=True, null=True)
     deliverd = models.BooleanField(default=False)
 

@@ -64,12 +64,11 @@
             <li><a href="{%url 'profile'%}">Profile | {{user.first_name}}</a></li>
             <li><a href="{%url 'medicine'%}">Medicines</a></li>
             <li><a href="{%url 'feedback'%}">Feedback</a></li>
-            <li><a href="{%url 'report'%}">Report</a></li>
-            <!-- <li><a href="{%url 'report'%}">Information</a></li> -->
             {%else%}
-            <li><a href="{%url 'registration'%}">Registration</a></li>
-            <li><a href="{%url 'mylogin'%}">Login</a></li>
-            {%endif%}
+            <><a href="{%url 'registration'%}">Registration</a>
+                </>
+                <li><a href="{%url 'mylogin'%}">Login</a></li>
+                {%endif%}
         </ul>
     </nav>
     <div class="main buttonset">

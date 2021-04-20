@@ -48,6 +48,17 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-3 control-label">Patient</label>
+                        <div class="col-md-9">
+                            <select name="patient" id="patient" class="form-control">
+                                <option value="">Choose...</option>
+                                {%for i in patient%}
+                                <option value="{{i.user.id}}">{{i.full_name}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-3 control-label" for="example-text-input">Hospital Name</label>
                         <div class="col-md-9">
                             <select name="hospital" id="hospital" class="form-control">

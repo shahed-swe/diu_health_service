@@ -8,8 +8,8 @@ import datetime
 def home(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    # elif request.user.is_student:
-    #     return redirect('/')
+    elif request.user.is_student:
+        return redirect('/patient/home')
     print(get_ip(request))
     print(request.user.first_name+' '+request.user.last_name)
     total_user = len(User.objects.all())
@@ -626,18 +626,22 @@ def set_hospital_route(request):
     if request.user.is_authenticated and request.user.is_assistant:
         driver = Driver.objects.filter(on_duty=False)
         hospital = HospitalName.objects.all()
+        patient = Student.objects.all()
         route = HospitalRoute.objects.all()
-        context = {"title":"Set Route For Driver", "driver":driver,"hospital":hospital,"route":route}
+        context = {"title":"Set Route For Driver", "driver":driver,"patient":patient,"hospital":hospital,"route":route}
         if request.method == "POST":
             driver = request.POST.get('driver')
+            patient = request.POST.get('patient')
             hospital = request.POST.get('hospital')
             if driver != "" and hospital != "":
                 new_route = HospitalRoute(
                     driver = Driver.objects.get(pk=driver),
+                    patient = Student.objects.get(pk=patient),
                     hospital_name = HospitalName.objects.get(pk=hospital)
                 )
                 new_route.save()
                 Driver.objects.filter(pk=driver).update(on_duty=True)
+                Student.objects.filter(pk=patient).update(on_road=True)
                 return redirect('/hospital_route')
         return render(request,'set_driver_route.html',context)
     else:
@@ -731,3 +735,75 @@ def update_driver_bill(request,id):
         return redirect('/bill_info')
     else:
         return redirect('/')
+
+
+def medicine_company_add(request):
+    if request.user.is_authenticated and request.user.is_moderator:
+        cmp = MedicineCompany.objects.all()
+        if request.method == 'POST':
+            mcpy = MedicineCompany(
+                company_name=request.POST.get('companyName')
+            )
+            mcpy.save()
+            return redirect('/company')
+        return render(request, 'add_medicine_company.html', {"title": "Add Medicine Companies", "cmp": cmp})
+
+
+# edit medicine company view, only available for moderator
+def edit_medicine_company(request, id):
+    if request.user.is_authenticated and request.user.is_moderator:
+        cmp = MedicineCompany.objects.filter(pk=id)
+        if request.method == "POST":
+            cmp = MedicineCompany.objects.filter(pk=id).update(
+                company_name=request.POST.get('companyName'))
+            return redirect('/company')
+        return render(request, 'edit_medicine_company.html', {"title": "Update", "cmp": cmp[0]})
+    else:
+        return redirect('/')
+
+# delete medicine company view, only available for moderator
+def delete_medicine_company(request, id):
+    if request.user.is_authenticated and request.user.is_moderator:
+        cmp = MedicineCompany.objects.filter(pk=id)
+        if request.method == "POST":
+            val = request.POST.get('button-value')
+            cmp.delete()
+            return redirect('/company')
+        return render(request, 'delete_medicine_company.html', {"title": "Delete", "cmp": cmp[0]})
+    else:
+        return redirect('/')
+
+# medicine crud view, only available for assistant
+
+
+def add_medicine(request):
+    if request.user.is_authenticated and request.user.is_moderator:
+        med = Medicine.objects.all()
+        company = MedicineCompany.objects.all()
+        context = {"title": "Add Medicine", "med": med, "cmp": company}
+        if request.method == "POST":
+            comp = request.POST.getlist('companies')
+            newcomp = [int(i) for i in comp if i != None]
+            medicine = Medicine(
+                medicine_name=request.POST.get('medicineName'),
+            )
+            medicine.save()
+            for i in newcomp:
+                medicine.company_name.add(i)
+            return redirect('/medicine')
+        return render(request, 'add_medicine.html', context)
+    else:
+        return redirect('/')
+
+# delete medicine view, only available for moderator
+def delete_medicine(request, id):
+    if request.user.is_authenticated and request.user.is_moderator:
+        med = Medicine.objects.filter(pk=id)
+        if request.method == 'POST':
+            val = request.POST.get('button-value')
+            med.delete()
+            return redirect('/medicine')
+        return render(request, 'delete_medicine.html', {"title": "Delete", "med": med[0]})
+    else:
+        return redirect('/')
+

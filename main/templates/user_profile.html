@@ -53,8 +53,8 @@
                             <td><span class="label label-primary">Admin</span></td>
                             {%elif user.is_doctor%}
                             <td><span class="label label-primary">Doctor</span></td>
-                            {%elif user.is_nurse%}
-                            <td><span class="label label-primary">Nurse</span></td>
+                            {%elif user.is_moderator%}
+                            <td><span class="label label-primary">Moderator</span></td>
                             {%else%}
                             <td><span class="label label-primary">Assistant</span></td>
                             {%endif%}

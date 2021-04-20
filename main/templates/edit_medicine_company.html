@@ -1,0 +1,59 @@
+{%extends 'base.html'%}
+<!--  -->
+{%load static%}
+<!-- static file loaded -->
+{%block main_content%}
+<!-- main content block starts -->
+<div id="page-content">
+    <!-- Datatables Header -->
+    <div class="content-header">
+        <div class="header-section">
+            <h1>
+                <i class="fa fa-table"></i>Medicine Company<br><small>Wherever the art of medicine is loved, there is also a love of humanity.</small><br/><small>– Hippocrates</small>
+            </h1>
+        </div>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Tables</li>
+        <li><a href="">Company</a></li>
+    </ul>
+    <!-- END Datatables Header -->
+
+    <!-- Datatables Content -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Basic Form Elements Block -->
+            <div class="block">
+                <!-- Basic Form Elements Title -->
+                <div class="block-title">
+                    <div class="block-options pull-right">
+                        <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-default toggle-bordered enable-tooltip" data-toggle="button" title="" data-original-title="Toggles .form-bordered class">No Borders</a>
+                    </div>
+                    <h2><strong>Medicine Company</strong> Create</h2>
+                </div>
+                <!-- END Form Elements Title -->
+
+                <!-- Basic Form Elements Content -->
+                <form method="POST" class="form-horizontal form-bordered">
+                    {%csrf_token%}
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Company</label>
+                        <div class="col-md-9">
+                            <input class="form-control" name="companyName" id="username" placeholder="Enter Comapany Name" value="{{cmp.company_name}}" />
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Submit</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Basic Form Elements Content -->
+            </div>
+            <!-- END Basic Form Elements Block -->
+        </div>
+    </div>
+    <!-- END Datatables Content -->
+</div>
+{%endblock main_content%}
+<!--  -->

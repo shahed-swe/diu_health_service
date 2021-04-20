@@ -1,0 +1,43 @@
+{%extends 'base.html'%}
+<!-- base extended -->
+{%load static%}
+<!-- static loaded -->
+{%block main_content%}
+<!-- start -->
+<style>
+    .form-horizontal {
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-bottom: 20000px;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12 mx-auto">
+        <!-- Basic Form Elements Block -->
+        <div class="block">
+            <!-- Basic Form Elements Title -->
+            <div class="block-title">
+                <div class="block-options pull-right">
+                    <a href="javascript:void(0)" class="btn btn-alt btn-sm btn-default toggle-bordered enable-tooltip" data-toggle="button" title="" data-original-title="Toggles .form-bordered class">Full Name: {{med.medicine_name}}</a>
+                    <!--  -->
+                </div>
+                <h2><strong>Medicine</strong> Delete</h2>
+            </div>
+            <!-- END Form Elements Title -->
+
+            <!-- Basic Form Elements Content -->
+            <form method="POST" class="form-horizontal form-bordered">
+                {%csrf_token%}
+                <!--  -->
+                <h1>Are you sure you want to delete?</h1>
+                <!-- <button class="btn btn-info shadow-none">Yes</button> -->
+                <input type="submit" value="Yes" name="button-value" class="btn btn-info shadow-none" />
+                <a href="/medicine" class="btn btn-success shadow-none">Back</a>
+            </form>
+            <!-- END Basic Form Elements Content -->
+        </div>
+        <!-- END Basic Form Elements Block -->
+    </div>
+</div>
+<!-- end -->
+{%endblock main_content%}

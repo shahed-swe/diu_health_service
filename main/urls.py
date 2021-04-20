@@ -45,7 +45,9 @@ urlpatterns = [
     url(r'^delete_bill/(?P<id>.*)/$',views.delete_billing_info, name="delete_billing_info"),
     url(r'^patient_bill/(?P<id>.*)/$',views.update_patient_bill, name="update_patient_bill"),
     url(r'^driver_bill/(?P<id>.*)/$',views.update_driver_bill, name="update_driver_bill"),
-
-
-
+    path('company/', views.medicine_company_add, name="medicine_company_add"),
+    url(r'^edit_medicine_company/(?P<id>.*)/$', views.edit_medicine_company, name="edit_medicine_company"),
+    url(r'^delete_medicine_company/(?P<id>.*)/$', views.delete_medicine_company, name="delete_medicine_company"),
+    path('medicine/', views.add_medicine, name="add_medicine"),
+    url(r'^delete_medicine/(?P<id>.*)/$', views.delete_medicine, name="delete_medicine"),
 ]

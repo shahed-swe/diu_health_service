@@ -46,8 +46,8 @@
                                 <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Dr. </strong>Dashboard</span>
                             {%elif user.is_assistant%}
                                 <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Assist. </strong>Dashboard</span>
-                            {%elif user.is_nurse%}
-                                <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Nurse. </strong>Dashboard</span>
+                            {%elif user.is_moderator%}
+                                <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Mod. </strong>Dashboard</span>
                             {%endif%}
                         </a>
                         <div class="sidebar-section sidebar-user clearfix sidebar-nav-mini-hide">
@@ -125,14 +125,14 @@
                                         <a href="{%url 'set_billing_info'%}">Set Billing Information</a>
                                     </li>
                                 </ul>
-                                {%elif user.is_nurse%}
-                                <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="fa fa-home sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Nurse Control</span></a>
+                                {%elif user.is_moderator%}
+                                <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="fa fa-home sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Mod. Control</span></a>
                                 <ul>
                                     <li>
-                                        <a href="/patient_medicine_info">Get Patient Info</a>
+                                        <a href="{%url 'medicine_company_add'%}">Add Medicine Company</a>
                                     </li>
                                     <li>
-                                        <a href="/give_patient_report">Patient Report</a>
+                                        <a href="{%url 'add_medicine'%}">Add Medicine's</a>
                                     </li>
                                 </ul>
                                 {%endif%}
