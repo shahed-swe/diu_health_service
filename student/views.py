@@ -65,7 +65,7 @@ def profile(request):
         medicines = AssignMedicine.objects.filter(student=pat[0].user.pk)
         report = ConditionInfo.objects.filter(patient=pat[0].user.pk)
         bill = BillingInfo.objects.filter(patient=pat[0].user.pk)
-        hospitalroute = HospitalRoute.objects.filter(patient=pat[0].user.pk)
+        hospitalroute = HospitalRoute.objects.filter(patient=pat[0].user.pk, deliverd=False)
         doctors = AssignedDoctor.objects.filter(patient=pat[0].user.pk)
         medicines_new = []
         for i in medicines:
@@ -120,7 +120,17 @@ def emg_msg(request):
 
 def driver(request):
     if request.user.is_authenticated and request.user.is_student:
-        return HttpResponse("DRiver Spotted")
+        student = request.user.student
+        stu_route = HospitalRoute.objects.filter(patient=student)
+        if stu_route[0].deliverd == True:
+            return redirect('/patient/home')
+        if request.method == "POST":
+            route = HospitalRoute.objects.filter(patient=student)
+            print(route[0].driver.pk)
+            Driver.objects.filter(pk=route[0].driver.pk).update(on_duty=False)
+            route.update(deliverd=True)
+            return redirect('/patient/home')
+        return render(request, 'driver_spotted.html', {"title":"Driver Position"})
     else:
         return redirect('/patient/home')
 
