@@ -581,6 +581,15 @@ def update_solve_info(request, id):
     else:
         return redirect('/')
 
+def update_release_info(request, id):
+    if request.user.is_authenticated and request.user.is_doctor:
+        condition = ConditionInfo.objects.filter(id=id)
+        Student.objects.filter(pk=condition[0].patient.pk).update(released=True)
+        return redirect('/health_condition')
+    else:
+        return redirect('/')
+
+
 def delete_condition_report(request, id):
     if request.user.is_authenticated and request.user.is_doctor:
         condition = ConditionInfo.objects.filter(id=id)

@@ -1,3 +1,4 @@
+from main.views import feedback
 from django.shortcuts import render, redirect
 from rest_framework.authtoken.models import Token
 from main.models import *
@@ -64,13 +65,14 @@ def profile(request):
         medicines = AssignMedicine.objects.filter(student=pat[0].user.pk)
         report = ConditionInfo.objects.filter(patient=pat[0].user.pk)
         bill = BillingInfo.objects.filter(patient=pat[0].user.pk)
+        hospitalroute = HospitalRoute.objects.filter(patient=pat[0].user.pk)
         doctors = AssignedDoctor.objects.filter(patient=pat[0].user.pk)
         medicines_new = []
         for i in medicines:
             for j in i.medicine.all():
                 if j.medicine_name not in medicines_new:
                     medicines_new.append(j.medicine_name)
-        context = {"title": "Profile | {}".format(pat[0].full_name), 'patient': pat[0], 'medicine_name': medicines_new, 'report': report, 'bill': bill, 'doctor': doctors}
+        context = {"title": "Profile | {}".format(pat[0].full_name), 'patient': pat[0], 'medicine_name': medicines_new, 'report': report, 'bill': bill, 'doctor': doctors,'hosp':hospitalroute}
         return render(request, 'patient_profile.html', context)
     else:
         return redirect('/patient/home')
@@ -78,7 +80,7 @@ def profile(request):
 
 def medicine(request):
     if request.user.is_authenticated and request.user.is_student:
-        medicines = AssignMedicine.objects.filter(patient=request.user.pk)
+        medicines = AssignMedicine.objects.filter(student=request.user.pk)
         print(medicines)
         context = {"title": "Medicines", 'medicine': medicines}
         return render(request, 'medicines.html', context)
@@ -88,16 +90,39 @@ def patfeedback(request):
     if request.user.is_authenticated and request.user.is_student:
         if request.method == 'POST':
             feed = Feedback(
-                patient=Student.objects.get(pk=request.user.pk),
+                student=Student.objects.get(pk=request.user.pk),
                 feedback=request.POST.get('feedback'),
-                solve=False
             )
             feed.save()
-            return redirect('/patient/home')
-        return render(request, 'feedback.html', {"title": "Feedback"})
+            
+            return redirect('/patient/pat_feedback')
+        feedbacks = Feedback.objects.filter(student=request.user.student)
+        return render(request, 'feedback.html', {"title": "Feedback","feeds":feedbacks})
     else:
         return redirect('/patient/home')
 
+
+def emg_msg(request):
+    if request.user.is_authenticated and request.user.is_student:
+        if request.method == 'POST':
+            emg = EmergencyMsg(
+                student=Student.objects.get(pk=request.user.pk),
+                message=request.POST.get('message'),
+                solve = False
+            )
+            emg.save()
+            
+            return redirect('/patient/message')
+        emg_message = EmergencyMsg.objects.filter(student=request.user.student,solve=False)
+        return render(request, 'emergency_message.html', {"title": "Emergency","emgs":emg_message})
+    else:
+        return redirect('/patient/home')
+
+def driver(request):
+    if request.user.is_authenticated and request.user.is_student:
+        return HttpResponse("DRiver Spotted")
+    else:
+        return redirect('/patient/home')
 
 
 

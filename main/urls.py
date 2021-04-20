@@ -33,6 +33,7 @@ urlpatterns = [
     path('health_condition/',views.health_condition,name="health_condition"),
     url(r'^update_condition_info/(?P<id>.*)/$',views.update_condition_info,name="update_condition_info"),
     url(r'^update_solve_info/(?P<id>.*)/$',views.update_solve_info,name="update_solve_info"),
+    url(r'^update_release_info/(?P<id>.*)/$',views.update_release_info,name="update_release_info"),
     url(r'^delete_condition_report/(?P<id>.*)/$',views.delete_condition_report, name="delete_condition_report"),
     path('feedbacks/',views.feedback, name="feedback"),
     url(r'^delete_feedback/(?P<id>.*)/$', views.delete_feedbacks, name="delete_feedbacks"),

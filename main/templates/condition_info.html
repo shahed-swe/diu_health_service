@@ -57,10 +57,10 @@
                         <td><a href="{%url 'update_solve_info' id=i.id%}" class="take"><span class="text-center label label-danger">Not Solved</span></a></td>
                         {%endif%}
                         <!-- release -->
-                        {%if i.solve == True%}
-                        <td><a href="{%url 'update_solve_info' id=i.id%}" class="take"><span class="text-center label label-success">Released</span></a></td>
-                        {%elif i.solve == False%}
-                        <td><a href="{%url 'update_solve_info' id=i.id%}" class="take"><span class="text-center label label-danger">Not Released</span></a></td>
+                        {%if i.patient.released == True%}
+                        <td><a href="{%url 'update_release_info' id=i.id%}" class="take"><span class="text-center label label-success">Released</span></a></td>
+                        {%elif i.patient.released == False%}
+                        <td><a href="{%url 'update_release_info' id=i.id%}" class="take"><span class="text-center label label-danger">Not Released</span></a></td>
                         {%endif%}
                         <!-- delete -->
                         <td class="text-center">

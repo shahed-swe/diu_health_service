@@ -63,7 +63,9 @@
             <!--  -->
             <li><a href="{%url 'profile'%}">Profile | {{user.first_name}}</a></li>
             <li><a href="{%url 'medicine'%}">Medicines</a></li>
-            <li><a href="{%url 'feedback'%}">Feedback</a></li>
+            <li><a href="{%url 'patfeedback'%}">Feedback</a></li>
+            <li><a href="{%url 'emg_msg'%}">Emergency Message</a></li>
+            <li><a href="{%url 'driver'%}">Driver</a></li>
             {%else%}
             <><a href="{%url 'registration'%}">Registration</a>
                 </>

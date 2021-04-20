@@ -86,15 +86,15 @@
                     </div>
                 </div>
                 <div class="col-lg-4 right-section">
-                    {%if medicine_name%}
                     <h3 class="hny-title">Assigned Medicine List</h3>
                     <br>
                     <!--  -->
                     {%for i in medicine_name%}
                     <p class="p-ab">{{forloop.counter}}. {{i}}</p>
+                    {%empty%}
+                    <p class="p-ab">No Medicine Needed</p>
                     {%endfor%}
                     <!--  -->
-                    {%endif%}
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@
 <section class="w3l-about1 py-5" id="intro">
     <div class="new-block top-bottom py-md-4">
         <div class="container">
-            {%if bill or nurse or doctor%}
+            {%if bill or doctor%}
             <div class="title-content text-center">
                 <h6 class="sub-title">Other Information</h6>
             </div>
@@ -111,7 +111,6 @@
             <div class="row mt-lg-5 mt- align-items-center">
                 <div class="col-lg-4 middle-section text-left">
                     <div class="section-width mb-lg-4">
-                        {%if bill%}
                         <h3 class="hny-title">Billing Information.</h3>
                         {%for i in bill%}
                         <!--  -->
@@ -127,27 +126,26 @@
                         <!--  -->
                         {%endif%}
                         <!--  -->
+                        {%empty%}
+                        <span id="status">No Bill</span>
                         <!--  -->
                         {%endfor%}
                         <!--  -->
-                        {%endif%}
                     </div>
                 </div>
                 <div class="col-lg-4 left-section my-lg-0 my-4 pr-lg-4">
                     <div class="section-width mb-lg-4">
-                        {%if nurse%}
-                        <h3 class="hny-title">Assigned Nurses.</h3>
-                        {%for i in nurse%}
-
+                        <h3 class="hny-title">Hospital Route</h3>
+                        {%for i in hosp%}
                         <ul>
-                            {%for j in i.nurse.all%}
-
-                            <li><span>{{forloop.counter}}.</span>{{j.full_name | title}}</li>
-                            {%endfor%}
+                            <li><span>Driver: {{i.driver.full_name}}. <br> </span>{{i.hospital_name}}</li>
+                        </ul>
+                        {%empty%}
+                        <ul>
+                            <li>Don't Need To Go To Hospital. You are safe</li>
                         </ul>
                         {%endfor%}
                         <!--  -->
-                        {%endif%}
                     </div>
                 </div>
                 <div class="col-lg-4 right-section">
