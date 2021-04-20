@@ -21,8 +21,7 @@ def driver(request):
         return redirect('/patient/home')
     else:
         print(get_ip(request))
-        print(request.user.first_name + ' ' + request.user.last_name)
-        return render(request, 'home.html', {"title": "Driver | Home"})
+        return render(request, 'driver_home.html', {"title": "Driver | Home"})
 
 
 

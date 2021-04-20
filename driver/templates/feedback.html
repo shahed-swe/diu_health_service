@@ -1,0 +1,74 @@
+{%extends 'patient_base.html'%}
+<!--  -->
+{%load static%}
+<!-- static loaded -->
+{%block main_content%}
+<!--  -->
+<style>
+    label {
+        font-family: 'Spartan', sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    #star {
+        color: red;
+    }
+    
+    .form-control {
+        height: 50px;
+    }
+</style>
+<section class="w3l-contact-main">
+    <div class="contact-infhny py-5">
+        <div class="container py-lg-3">
+            <div class="title-content text-left mb-lg-4 mb-4 text-center">
+                <h3 class="hny-title">Give <span>Feedbacks</span></h3>
+            </div>
+            <div class="col-12 col-lg-10 col-md-8 col-sm-10 mx-auto">
+                <form method="POST">
+                    {%csrf_token%}
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <label for="">Feedback<span id="star">*</span></label>
+                            <input type="text" name="feedback" id="username" class="form-control">
+                        </div>
+                        <button class="btn btn-outline-success shadow-sm">Submit</button>
+                    </div>
+                </form>
+                <section class="w3l-wecome-content-6">
+                    <!-- /content-6-section -->
+                    <div class="ab-content-6-mian py-5">
+                        <div class="container py-lg-3">
+                            <div class="title-head text-left mb-4">
+                                <h3 class="hny-title text-center">
+                                    Feedbacks <span>List</span> </h3>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Feedbacks</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {%for i in feeds%}
+                                    <tr>
+                                        <th scope="row">{{forloop.counter}}</th>
+                                        <td>{{i.feedback}}</td>
+                                    </tr>
+                                    {%endfor%}
+                                    <!--  -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <!--  -->
+                {{message}}
+                <!--  -->
+            </div>
+        </div>
+</section>
+{%endblock main_content%}

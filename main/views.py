@@ -10,6 +10,8 @@ def home(request):
         return redirect('/login')
     elif request.user.is_student:
         return redirect('/patient/home')
+    elif request.user.is_driver:
+        return redirect('/driver/driver_home')
     print(get_ip(request))
     print(request.user.first_name+' '+request.user.last_name)
     total_user = len(User.objects.all())

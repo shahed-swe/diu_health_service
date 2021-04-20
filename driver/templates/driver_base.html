@@ -61,14 +61,14 @@
         <ul>
             {%if user.is_authenticated%}
             <!--  -->
-            <li><a href="">Profile | {{user.first_name}}</a></li>
-            <li><a href="">Route</a></li>
-            <li><a href="">Bill</a></li>
+            <li><a href="#">Profile | {{user.first_name}}</a></li>
+            <li><a href="#">Hospital Route</a></li>
+            <li><a href="#">My Bill</a></li>
             {%else%}
-            <li><a href="{%url 'registration'%}">Registration</a>
-            </li>
-            <li><a href="{%url 'mylogin'%}">Login</a></li>
-            {%endif%}
+            <><a href="{%url 'registration'%}">Registration</a>
+                </>
+                <li><a href="{%url 'mylogin'%}">Login</a></li>
+                {%endif%}
         </ul>
     </nav>
     <div class="main buttonset">
@@ -114,44 +114,6 @@
         {%endblock main_content%}
         <!--//testimonials-->
         <!-- footer-28 block -->
-        <section class="w3l-footer">
-            <footer class="footer-28">
-                <div class="footer-bg-layer">
-                    <div class="midd-footer-28 align-center py-lg-4 py-3 mt-5">
-                        <div class="container">
-                            <p class="copy-footer-28 text-center"> &copy; . All Rights Reserved. Design by
-                                <a href="https://github.com/shahed-swe/">Shahed</a></p>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-
-            <!-- move top -->
-            <button onclick="topFunction()" id="movetop" title="Go to top">
-				<span class="fa fa-arrow-up" aria-hidden="true"></span>
-			</button>
-            <script>
-                // When the user scrolls down 20px from the top of the document, show the button
-                window.onscroll = function() {
-                    scrollFunction()
-                };
-
-                function scrollFunction() {
-                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                        document.getElementById("movetop").style.display = "block";
-                    } else {
-                        document.getElementById("movetop").style.display = "none";
-                    }
-                }
-
-                // When the user clicks on the button, scroll to the top of the document
-                function topFunction() {
-                    document.body.scrollTop = 0;
-                    document.documentElement.scrollTop = 0;
-                }
-            </script>
-            <!-- /move top -->
-        </section>
         <!-- //footer-28 block -->
 
 

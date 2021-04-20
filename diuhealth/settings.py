@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'student',
+    'driver',
     # 'django_extensions',
 ]
 
