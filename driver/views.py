@@ -26,8 +26,12 @@ def driver(request):
 
 
 def driverprofile(request):
-    if request.user.is_authenticated and request.user.is_student:
-        context = {"title": "Profile | {}".format(request.user.driver.full_name)}
+    if request.user.is_authenticated and request.user.is_driver:
+        status = request.user.driver.on_duty
+        user = request.user.driver
+        router = HospitalRoute.objects.filter(driver=user)
+        bill = BillingInfo.objects.filter(driver=user)
+        context = {"title": "Profile | {}".format(request.user.driver.full_name),"status":status,"driver":user,'router':router,"bill":bill}
         return render(request, 'driver_profile.html', context)
     else:
         return redirect('/patient/home')

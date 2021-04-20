@@ -61,9 +61,7 @@
         <ul>
             {%if user.is_authenticated%}
             <!--  -->
-            <li><a href="#">Profile | {{user.first_name}}</a></li>
-            <li><a href="#">Hospital Route</a></li>
-            <li><a href="#">My Bill</a></li>
+            <li><a href="{%url 'driverprofile'%}">Profile | {{user.first_name}}</a></li>
             {%else%}
             <><a href="{%url 'registration'%}">Registration</a>
                 </>
