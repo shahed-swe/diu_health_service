@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
     path('patient/', include('student.urls')),
+    path('driver/', include('driver.urls')),
 ]
