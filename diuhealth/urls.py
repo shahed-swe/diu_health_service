@@ -22,3 +22,6 @@ urlpatterns = [
     path('patient/', include('student.urls')),
     path('driver/', include('driver.urls')),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
